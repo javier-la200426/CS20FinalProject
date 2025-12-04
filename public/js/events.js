@@ -30,12 +30,16 @@ async function loadUserName() {
 }
 
 function showAd(callback) {
+    const buttonSection = document.getElementById('button-section');
     const adSection = document.getElementById('ad-section');
     const eventSection = document.getElementById('event-section');
     const countdownText = document.getElementById('ad-countdown');
 
+    buttonSection.classList.add('hidden');
     adSection.classList.remove('hidden');
     eventSection.classList.add('hidden');
+
+    adCountdown = 5; // Reset countdown
 
     const interval = setInterval(() => {
         adCountdown--;
@@ -51,23 +55,31 @@ function showAd(callback) {
 }
 
 async function checkExistingEvent() {
+    const buttonSection = document.getElementById('button-section');
     const adSection = document.getElementById('ad-section');
     const eventSection = document.getElementById('event-section');
-    
+
     try {
         const response = await fetch(`${API_URL}/api/events/user/${CURRENT_USER_ID}`);
         const event = await response.json();
 
         if (event && event._id) {
+            buttonSection.classList.add('hidden');
             adSection.classList.add('hidden');
             eventSection.classList.remove('hidden');
             currentEvent = event;
             displayEvent(event);
         } else {
-            showAd(generateNewEvent);
+            // Show the button section, hide ad and event
+            buttonSection.classList.remove('hidden');
+            adSection.classList.add('hidden');
+            eventSection.classList.add('hidden');
         }
     } catch (error) {
-        showAd(generateNewEvent);
+        // Show the button section, hide ad and event
+        buttonSection.classList.remove('hidden');
+        adSection.classList.add('hidden');
+        eventSection.classList.add('hidden');
     }
 }
 
@@ -162,6 +174,10 @@ function showMessage(text, type) {
     messageDiv.className = `message message-${type}`;
     messageDiv.classList.remove('hidden');
 }
+
+document.getElementById('get-event-btn').addEventListener('click', function() {
+    showAd(generateNewEvent);
+});
 
 document.getElementById('accept-btn').addEventListener('click', acceptEvent);
 document.getElementById('decline-btn').addEventListener('click', declineEvent);
