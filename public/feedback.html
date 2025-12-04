@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendFinder - Feedback</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">FriendFinder</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="preferences.html">Preferences</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Event Feedback</h1>
+            <p>Help us improve by sharing your experience!</p>
+
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label for="rating">Overall Rating (1-5)</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select a rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Terrible</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="had-fun">Did you have fun?</label>
+                    <select id="had-fun" name="hadFun" required>
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="somewhat">Somewhat</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="meet-again">Would you meet with this group again?</label>
+                    <select id="meet-again" name="wouldMeetAgain" required>
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes, definitely</option>
+                        <option value="maybe">Maybe</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Additional Comments</label>
+                    <textarea id="comments" name="comments" placeholder="Tell us more about your experience..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Submit Feedback</button>
+            </form>
+
+            <div id="feedback-message" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="js/feedback.js"></script>
+</body>
+</html>
+

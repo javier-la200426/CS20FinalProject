@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendFinder - Preferences</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">FriendFinder</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="preferences.html">Preferences</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1>Your Preferences</h1>
+            <p>Update your hobbies, availability, and location.</p>
+
+            <form id="preferences-form">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" placeholder="e.g., Boston, MA">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Hobbies</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="hobbies" value="hiking"> Hiking</label>
+                        <label><input type="checkbox" name="hobbies" value="reading"> Reading</label>
+                        <label><input type="checkbox" name="hobbies" value="gaming"> Gaming</label>
+                        <label><input type="checkbox" name="hobbies" value="cooking"> Cooking</label>
+                        <label><input type="checkbox" name="hobbies" value="music"> Music</label>
+                        <label><input type="checkbox" name="hobbies" value="sports"> Sports</label>
+                        <label><input type="checkbox" name="hobbies" value="movies"> Movies</label>
+                        <label><input type="checkbox" name="hobbies" value="travel"> Travel</label>
+                        <label><input type="checkbox" name="hobbies" value="art"> Art</label>
+                        <label><input type="checkbox" name="hobbies" value="fitness"> Fitness</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Availability</label>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Morning (8am-12pm) | Afternoon (12pm-5pm) | Evening (5pm-9pm)</p>
+                    <div class="availability-grid">
+                        <div class="day-row">
+                            <span class="day-name">Monday</span>
+                            <label><input type="checkbox" name="monday-morning"> Morning</label>
+                            <label><input type="checkbox" name="monday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="monday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Tuesday</span>
+                            <label><input type="checkbox" name="tuesday-morning"> Morning</label>
+                            <label><input type="checkbox" name="tuesday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="tuesday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Wednesday</span>
+                            <label><input type="checkbox" name="wednesday-morning"> Morning</label>
+                            <label><input type="checkbox" name="wednesday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="wednesday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Thursday</span>
+                            <label><input type="checkbox" name="thursday-morning"> Morning</label>
+                            <label><input type="checkbox" name="thursday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="thursday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Friday</span>
+                            <label><input type="checkbox" name="friday-morning"> Morning</label>
+                            <label><input type="checkbox" name="friday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="friday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Saturday</span>
+                            <label><input type="checkbox" name="saturday-morning"> Morning</label>
+                            <label><input type="checkbox" name="saturday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="saturday-evening"> Evening</label>
+                        </div>
+                        <div class="day-row">
+                            <span class="day-name">Sunday</span>
+                            <label><input type="checkbox" name="sunday-morning"> Morning</label>
+                            <label><input type="checkbox" name="sunday-afternoon"> Afternoon</label>
+                            <label><input type="checkbox" name="sunday-evening"> Evening</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Save Preferences</button>
+            </form>
+
+            <div id="preferences-message" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="js/preferences.js"></script>
+</body>
+</html>
+

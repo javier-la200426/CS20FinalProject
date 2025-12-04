@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendFinder - Events</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">FriendFinder</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="preferences.html">Preferences</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card" id="ad-section">
+            <div class="ad-container">
+                <h2>Advertisement</h2>
+                <p>Your ad here!</p>
+                <p id="ad-countdown">Skipping in 5 seconds...</p>
+            </div>
+        </div>
+
+        <div class="card hidden" id="event-section">
+            <h1>Your Event This Week</h1>
+            
+            <div class="event-details" id="event-details">
+                <p><strong>Activity:</strong> <span id="activity-name">Loading...</span></p>
+                <p><strong>Description:</strong> <span id="activity-description">Loading...</span></p>
+                <p><strong>Location:</strong> <span id="event-location">Loading...</span></p>
+                <p><strong>When:</strong> <span id="event-time">Loading...</span></p>
+                <p><strong>Status:</strong> <span id="event-status">Loading...</span></p>
+            </div>
+
+            <div class="button-group" id="action-buttons">
+                <button class="btn btn-accept" id="accept-btn">Accept</button>
+                <button class="btn btn-decline" id="decline-btn">Decline</button>
+            </div>
+
+            <div id="status-message" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="js/events.js"></script>
+</body>
+</html>
+
