@@ -76,7 +76,45 @@
 
     <div class="reset-button-container" id="reset-container">
         <div class="reset-arrow" id="reset-arrow">▲</div>
-        <button class="reset-btn hidden" id="reset-btn">Reset All Events</button>
+        <div class="admin-panel hidden" id="admin-panel">
+            <button class="reset-btn" id="reset-btn">Reset All Events</button>
+            <button class="rules-btn" id="rules-btn">Matchmaking Rules</button>
+        </div>
+    </div>
+
+    <div class="rules-modal" id="rules-modal">
+        <div class="rules-content">
+            <span class="close-rules" id="close-rules">&times;</span>
+            <h2>Matchmaking Rules</h2>
+            <p>Users are matched based on the following criteria:</p>
+            <div class="rule-item">
+                <span class="rule-number">1</span>
+                <div>
+                    <strong>At least 2 hobbies in common</strong>
+                    <p>You must share at least 2 hobbies with other users.</p>
+                </div>
+            </div>
+            <div class="rule-item">
+                <span class="rule-number">2</span>
+                <div>
+                    <strong>Same state</strong>
+                    <p>Users must be in the same state (e.g., MA).</p>
+                </div>
+            </div>
+            <div class="rule-item">
+                <span class="rule-number">3</span>
+                <div>
+                    <strong>At least 1 overlapping availability</strong>
+                    <p>Must have at least one matching day AND time slot.</p>
+                </div>
+            </div>
+            <div class="rule-example">
+                <h3>Example</h3>
+                <p><strong>Alex:</strong> hiking, gaming, music | Boston, MA | Saturday afternoon</p>
+                <p><strong>Jordan:</strong> hiking, gaming, music | Cambridge, MA | Saturday afternoon</p>
+                <p class="match-result">✓ Match! (3 hobbies, same state, same time)</p>
+            </div>
+        </div>
     </div>
 
     <script src="js/events.js"></script>

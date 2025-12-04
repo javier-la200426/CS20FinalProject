@@ -2,20 +2,6 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const User = require('./models/User');
 
-const hobbiesList = ['hiking', 'reading', 'gaming', 'cooking', 'music', 'sports', 'movies', 'travel', 'art', 'fitness'];
-const locations = ['Boston, MA', 'Cambridge, MA', 'Somerville, MA', 'Brookline, MA', 'Newton, MA'];
-const firstNames = ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Quinn', 'Avery', 'Blake', 'Drew'];
-const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Wilson', 'Moore'];
-
-function getRandomItems(arr, count) {
-    const shuffled = arr.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 async function seedDatabase() {
     try {
         await mongoose.connect(process.env.MONGODB_URI);
@@ -24,36 +10,191 @@ async function seedDatabase() {
         await User.deleteMany({});
         console.log('Cleared existing users');
 
-        const users = [];
-
-        for (let i = 0; i < 50; i++) {
-            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            
-            const user = {
-                name: `${firstName} ${lastName}`,
-                age: getRandomInt(20, 45),
-                email: `${firstName.toLowerCase()}${i}@email.com`,
-                phone: `555-${String(getRandomInt(100, 999))}-${String(getRandomInt(1000, 9999))}`,
-                location: locations[Math.floor(Math.random() * locations.length)],
-                hobbies: getRandomItems(hobbiesList, getRandomInt(2, 5)),
+        const users = [
+            {
+                name: 'Taylor Smith',
+                age: 24,
+                email: 'taylor@email.com',
+                phone: '555-111-1111',
+                location: 'Boston, MA',
+                hobbies: ['hiking', 'gaming', 'reading'],
                 availability: {
-                    monday: { morning: Math.random() > 0.6, afternoon: Math.random() > 0.5, evening: Math.random() > 0.4 },
-                    tuesday: { morning: Math.random() > 0.6, afternoon: Math.random() > 0.5, evening: Math.random() > 0.4 },
-                    wednesday: { morning: Math.random() > 0.6, afternoon: Math.random() > 0.5, evening: Math.random() > 0.4 },
-                    thursday: { morning: Math.random() > 0.6, afternoon: Math.random() > 0.5, evening: Math.random() > 0.4 },
-                    friday: { morning: Math.random() > 0.7, afternoon: Math.random() > 0.5, evening: Math.random() > 0.3 },
-                    saturday: { morning: Math.random() > 0.4, afternoon: Math.random() > 0.3, evening: Math.random() > 0.3 },
-                    sunday: { morning: Math.random() > 0.4, afternoon: Math.random() > 0.3, evening: Math.random() > 0.5 }
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: true, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
                 },
                 tier: 'free'
-            };
-
-            users.push(user);
-        }
+            },
+            {
+                name: 'Morgan Lee',
+                age: 29,
+                email: 'morgan@email.com',
+                phone: '555-222-2222',
+                location: 'Cambridge, MA',
+                hobbies: ['hiking', 'music', 'cooking'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: true, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Casey Wilson',
+                age: 26,
+                email: 'casey@email.com',
+                phone: '555-333-3333',
+                location: 'Somerville, MA',
+                hobbies: ['gaming', 'music', 'movies'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: true, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Riley Brown',
+                age: 31,
+                email: 'riley@email.com',
+                phone: '555-444-4444',
+                location: 'Newton, MA',
+                hobbies: ['hiking', 'gaming', 'fitness'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: true, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Quinn Davis',
+                age: 27,
+                email: 'quinn@email.com',
+                phone: '555-555-5555',
+                location: 'Brookline, MA',
+                hobbies: ['reading', 'cooking', 'art'],
+                availability: {
+                    monday: { morning: true, afternoon: false, evening: false },
+                    tuesday: { morning: true, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: false, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Avery Garcia',
+                age: 23,
+                email: 'avery@email.com',
+                phone: '555-666-6666',
+                location: 'Boston, MA',
+                hobbies: ['sports', 'fitness', 'travel'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: true },
+                    tuesday: { morning: false, afternoon: false, evening: true },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: false, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Blake Miller',
+                age: 30,
+                email: 'blake@email.com',
+                phone: '555-777-7777',
+                location: 'Cambridge, MA',
+                hobbies: ['movies', 'gaming', 'music'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: true, evening: false },
+                    thursday: { morning: false, afternoon: true, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: false, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Drew Johnson',
+                age: 28,
+                email: 'drew@email.com',
+                phone: '555-888-8888',
+                location: 'Boston, MA',
+                hobbies: ['hiking', 'music', 'art'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: true },
+                    saturday: { morning: false, afternoon: true, evening: false },
+                    sunday: { morning: false, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Jamie Moore',
+                age: 25,
+                email: 'jamie@email.com',
+                phone: '555-999-9999',
+                location: 'Somerville, MA',
+                hobbies: ['cooking', 'travel', 'reading'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: true, afternoon: false, evening: true },
+                    sunday: { morning: true, afternoon: false, evening: false }
+                },
+                tier: 'free'
+            },
+            {
+                name: 'Sam Williams',
+                age: 33,
+                email: 'sam@email.com',
+                phone: '555-000-0000',
+                location: 'Newton, MA',
+                hobbies: ['fitness', 'sports', 'hiking'],
+                availability: {
+                    monday: { morning: false, afternoon: false, evening: false },
+                    tuesday: { morning: false, afternoon: false, evening: false },
+                    wednesday: { morning: false, afternoon: false, evening: false },
+                    thursday: { morning: false, afternoon: false, evening: false },
+                    friday: { morning: false, afternoon: false, evening: false },
+                    saturday: { morning: false, afternoon: true, evening: true },
+                    sunday: { morning: false, afternoon: true, evening: false }
+                },
+                tier: 'free'
+            }
+        ];
 
         await User.insertMany(users);
-        console.log('Created 50 users');
+        console.log('Created 10 hardcoded users');
 
         const demoUser1 = new User({
             _id: new mongoose.Types.ObjectId('000000000000000000000001'),
@@ -108,4 +249,3 @@ async function seedDatabase() {
 }
 
 seedDatabase();
-

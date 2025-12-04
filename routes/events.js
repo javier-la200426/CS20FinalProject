@@ -76,12 +76,20 @@ router.post('/generate', async (req, res) => {
         const currentState = getState(currentUser.location);
         const allUsers = await User.find({ _id: { $ne: userId } });
         
+        const DEMO_USER_IDS = ['000000000000000000000001', '000000000000000000000002'];
+        
         const matchingUsers = allUsers.filter(user => {
             const commonHobbies = countCommonHobbies(user.hobbies, currentUser.hobbies);
             const sameState = getState(user.location) === currentState;
             const hasTimeOverlap = hasOverlappingAvailability(user.availability, currentUser.availability);
             
             return commonHobbies >= 2 && sameState && hasTimeOverlap;
+        }).sort((a, b) => {
+            const aIsDemo = DEMO_USER_IDS.includes(a._id.toString());
+            const bIsDemo = DEMO_USER_IDS.includes(b._id.toString());
+            if (aIsDemo && !bIsDemo) return -1; // Demo user goes first
+            if (!aIsDemo && bIsDemo) return 1; // Non-demo goes after
+            return 0; // Keep same order
         }).slice(0, 4);
 
         const groupMembers = [

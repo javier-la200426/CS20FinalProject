@@ -166,13 +166,17 @@ function showMessage(text, type) {
 document.getElementById('accept-btn').addEventListener('click', acceptEvent);
 document.getElementById('decline-btn').addEventListener('click', declineEvent);
 
-function initResetButton() {
+function initAdminPanel() {
     const arrow = document.getElementById('reset-arrow');
+    const adminPanel = document.getElementById('admin-panel');
     const resetBtn = document.getElementById('reset-btn');
+    const rulesBtn = document.getElementById('rules-btn');
+    const rulesModal = document.getElementById('rules-modal');
+    const closeRules = document.getElementById('close-rules');
     
     arrow.addEventListener('click', function() {
         arrow.classList.toggle('open');
-        resetBtn.classList.toggle('hidden');
+        adminPanel.classList.toggle('hidden');
     });
     
     resetBtn.addEventListener('click', async function() {
@@ -186,9 +190,23 @@ function initResetButton() {
             }
         }
     });
+    
+    rulesBtn.addEventListener('click', function() {
+        rulesModal.classList.add('show');
+    });
+    
+    closeRules.addEventListener('click', function() {
+        rulesModal.classList.remove('show');
+    });
+    
+    rulesModal.addEventListener('click', function(e) {
+        if (e.target === rulesModal) {
+            rulesModal.classList.remove('show');
+        }
+    });
 }
 
 initUserSwitcher();
 loadUserName();
 checkExistingEvent();
-initResetButton();
+initAdminPanel();
