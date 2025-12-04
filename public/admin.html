@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendFinder - Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="admin.html" class="logo">FriendFinder Admin</a>
+        <ul>
+            <li>
+                <select id="user-switcher" class="user-switcher">
+                    <option value="admin" selected>Admin</option>
+                    <option value="000000000000000000000001">Alex Demo</option>
+                    <option value="000000000000000000000002">Jordan Demo</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container admin-container">
+        <div class="card">
+            <h1>Admin Dashboard</h1>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" id="users-tab">Users</button>
+                <button class="tab-btn" id="events-tab">Events</button>
+            </div>
+
+            <div id="users-section" class="admin-section">
+                <h2>All Users (<span id="user-count">0</span>)</h2>
+                <div id="users-list" class="admin-list"></div>
+            </div>
+
+            <div id="events-section" class="admin-section hidden">
+                <h2>All Events (<span id="event-count">0</span>)</h2>
+                <div id="events-list" class="admin-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-modal" id="edit-modal">
+        <div class="edit-content">
+            <span class="close-edit" id="close-edit">&times;</span>
+            <h2>Edit User</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-user-id">
+                
+                <div class="form-group">
+                    <label for="edit-name">Name</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-location">Location</label>
+                    <input type="text" id="edit-location" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Hobbies</label>
+                    <div class="checkbox-group" id="edit-hobbies">
+                        <label><input type="checkbox" value="hiking"> Hiking</label>
+                        <label><input type="checkbox" value="reading"> Reading</label>
+                        <label><input type="checkbox" value="gaming"> Gaming</label>
+                        <label><input type="checkbox" value="cooking"> Cooking</label>
+                        <label><input type="checkbox" value="music"> Music</label>
+                        <label><input type="checkbox" value="sports"> Sports</label>
+                        <label><input type="checkbox" value="movies"> Movies</label>
+                        <label><input type="checkbox" value="travel"> Travel</label>
+                        <label><input type="checkbox" value="art"> Art</label>
+                        <label><input type="checkbox" value="fitness"> Fitness</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
+

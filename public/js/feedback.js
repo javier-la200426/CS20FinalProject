@@ -7,8 +7,13 @@ function initUserSwitcher() {
     if (switcher) {
         switcher.value = CURRENT_USER_ID;
         switcher.addEventListener('change', function() {
-            localStorage.setItem('currentUserId', this.value);
-            window.location.reload();
+            if (this.value === 'admin') {
+                localStorage.setItem('currentUserId', 'admin');
+                window.location.href = 'admin.html';
+            } else {
+                localStorage.setItem('currentUserId', this.value);
+                window.location.reload();
+            }
         });
     }
 }

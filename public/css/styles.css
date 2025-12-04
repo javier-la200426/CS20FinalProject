@@ -504,6 +504,146 @@ h2 {
     margin-top: 10px;
 }
 
+.admin-link {
+    background: #ffc107;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #333 !important;
+}
+
+.admin-container {
+    max-width: 1000px;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.tab-btn.active {
+    background: #4a90a4;
+    color: white;
+}
+
+.admin-section {
+    margin-top: 20px;
+}
+
+.admin-section.hidden {
+    display: none;
+}
+
+.admin-list {
+    display: grid;
+    gap: 15px;
+}
+
+.admin-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    background: #4a90a4;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-card-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.admin-card-body {
+    padding: 15px;
+}
+
+.admin-card-body p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.btn-small {
+    padding: 5px 12px;
+    background: white;
+    color: #4a90a4;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-small:hover {
+    background: #f0f0f0;
+}
+
+.availability-summary {
+    font-size: 13px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.8;
+}
+
+.member-status {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.edit-modal.show {
+    display: flex;
+}
+
+.edit-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-edit {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-edit:hover {
+    color: #333;
+}
+
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
