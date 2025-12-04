@@ -105,10 +105,19 @@ function formatMemberStatus(members) {
     const declined = members.filter(m => m.status === 'declined').length;
     const pending = members.filter(m => m.status === 'pending').length;
     
+    const memberList = members.map(m => {
+        const name = m.userId ? m.userId.name : 'Unknown';
+        const statusClass = `status-${m.status}`;
+        return `<span class="${statusClass}">${name} (${m.status})</span>`;
+    }).join(', ');
+    
     return `
-        <span class="status-accepted">${accepted} accepted</span> | 
-        <span class="status-declined">${declined} declined</span> | 
-        <span class="status-pending">${pending} pending</span>
+        <div class="member-summary">
+            <span class="status-accepted">${accepted} accepted</span> | 
+            <span class="status-declined">${declined} declined</span> | 
+            <span class="status-pending">${pending} pending</span>
+        </div>
+        <div class="member-names">${memberList}</div>
     `;
 }
 

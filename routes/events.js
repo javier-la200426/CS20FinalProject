@@ -33,7 +33,9 @@ function hasOverlappingAvailability(avail1, avail2) {
 
 router.get('/all', async (req, res) => {
     try {
-        const events = await Event.find().sort({ createdAt: -1 });
+        const events = await Event.find()
+            .populate('groupMembers.userId', 'name email')
+            .sort({ createdAt: -1 });
         res.json(events);
     } catch (error) {
         res.status(500).json({ error: error.message });

@@ -603,6 +603,27 @@ h2 {
     font-size: 14px;
 }
 
+.member-summary {
+    margin-bottom: 8px;
+}
+
+.member-names {
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.status-accepted {
+    color: #28a745;
+}
+
+.status-declined {
+    color: #dc3545;
+}
+
+.status-pending {
+    color: #ffc107;
+}
+
 .edit-modal {
     position: fixed;
     top: 0;
