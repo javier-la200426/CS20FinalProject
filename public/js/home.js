@@ -47,6 +47,14 @@ async function loadEventStatus() {
                 <a href="events.html" class="btn">View Event Details</a>
             `;
         } else if (userStatus === 'accepted') {
+            const feedbackResponse = await fetch(`${API_URL}/api/feedback/check/${CURRENT_USER_ID}/${event._id}`);
+            const feedbackData = await feedbackResponse.json();
+            
+            let feedbackButton = '<a href="feedback.html" class="btn">Give Feedback</a>';
+            if (feedbackData.hasFeedback) {
+                feedbackButton = '<p class="feedback-done">✓ Thanks for your feedback!</p>';
+            }
+            
             statusDiv.innerHTML = `
                 <div class="event-details">
                     <p><strong>Activity:</strong> ${event.activityName}</p>
@@ -54,7 +62,7 @@ async function loadEventStatus() {
                     <p><strong>Location:</strong> ${event.location}</p>
                     <p><strong>Status:</strong> <span class="status-accepted">Accepted</span></p>
                 </div>
-                <a href="feedback.html" class="btn">Give Feedback</a>
+                ${feedbackButton}
             `;
         } else if (userStatus === 'declined') {
             statusDiv.innerHTML = `

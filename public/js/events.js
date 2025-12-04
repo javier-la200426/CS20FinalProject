@@ -166,6 +166,29 @@ function showMessage(text, type) {
 document.getElementById('accept-btn').addEventListener('click', acceptEvent);
 document.getElementById('decline-btn').addEventListener('click', declineEvent);
 
+function initResetButton() {
+    const arrow = document.getElementById('reset-arrow');
+    const resetBtn = document.getElementById('reset-btn');
+    
+    arrow.addEventListener('click', function() {
+        arrow.classList.toggle('open');
+        resetBtn.classList.toggle('hidden');
+    });
+    
+    resetBtn.addEventListener('click', async function() {
+        if (confirm('Delete all events? This will reset the demo.')) {
+            try {
+                await fetch(`${API_URL}/api/events/reset-all`, { method: 'DELETE' });
+                alert('All events deleted! Refreshing...');
+                window.location.reload();
+            } catch (error) {
+                alert('Error deleting events');
+            }
+        }
+    });
+}
+
 initUserSwitcher();
 loadUserName();
 checkExistingEvent();
+initResetButton();

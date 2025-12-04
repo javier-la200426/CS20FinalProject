@@ -127,4 +127,13 @@ router.put('/:id/decline/:userId', async (req, res) => {
     }
 });
 
+router.delete('/reset-all', async (req, res) => {
+    try {
+        await Event.deleteMany({});
+        res.json({ message: 'All events deleted' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

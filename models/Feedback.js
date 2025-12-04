@@ -5,7 +5,7 @@ const feedbackSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Event'
     },
-    odI: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
@@ -20,4 +20,3 @@ const feedbackSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Feedback', feedbackSchema);
-
