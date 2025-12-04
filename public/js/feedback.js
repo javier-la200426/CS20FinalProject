@@ -1,5 +1,28 @@
 const API_URL = '';
-const CURRENT_USER_ID = '000000000000000000000001';
+let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
+
+function initUserSwitcher() {
+    const switcher = document.getElementById('user-switcher');
+    if (switcher) {
+        switcher.value = CURRENT_USER_ID;
+        switcher.addEventListener('change', function() {
+            localStorage.setItem('currentUserId', this.value);
+            window.location.reload();
+        });
+    }
+}
+
+async function loadUserName() {
+    try {
+        const response = await fetch(`${API_URL}/api/users/${CURRENT_USER_ID}`);
+        const user = await response.json();
+        if (user && user.name) {
+            document.getElementById('user-name-display').textContent = user.name;
+        }
+    } catch (error) {
+        console.log('Could not load user name');
+    }
+}
 
 const form = document.getElementById('feedback-form');
 
@@ -7,7 +30,7 @@ form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const formData = {
-        odI: CURRENT_USER_ID,
+        userId: CURRENT_USER_ID,
         rating: parseInt(document.getElementById('rating').value),
         hadFun: document.getElementById('had-fun').value,
         wouldMeetAgain: document.getElementById('meet-again').value,
@@ -39,3 +62,5 @@ function showMessage(text, type) {
     messageDiv.classList.remove('hidden');
 }
 
+initUserSwitcher();
+loadUserName();

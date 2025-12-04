@@ -55,11 +55,11 @@ async function seedDatabase() {
         await User.insertMany(users);
         console.log('Created 50 users');
 
-        const demoUser = new User({
+        const demoUser1 = new User({
             _id: new mongoose.Types.ObjectId('000000000000000000000001'),
-            name: 'Demo User',
+            name: 'Alex Demo',
             age: 25,
-            email: 'demo@email.com',
+            email: 'alex@email.com',
             phone: '555-123-4567',
             location: 'Boston, MA',
             hobbies: ['hiking', 'gaming', 'music'],
@@ -74,8 +74,30 @@ async function seedDatabase() {
             },
             tier: 'free'
         });
-        await demoUser.save();
-        console.log('Created demo user with ID:', demoUser._id);
+        await demoUser1.save();
+        console.log('Created Demo User 1 (Alex) with ID:', demoUser1._id);
+
+        const demoUser2 = new User({
+            _id: new mongoose.Types.ObjectId('000000000000000000000002'),
+            name: 'Jordan Demo',
+            age: 28,
+            email: 'jordan@email.com',
+            phone: '555-987-6543',
+            location: 'Boston, MA',
+            hobbies: ['hiking', 'gaming', 'movies'],
+            availability: {
+                monday: { morning: false, afternoon: false, evening: false },
+                tuesday: { morning: false, afternoon: false, evening: false },
+                wednesday: { morning: false, afternoon: true, evening: true },
+                thursday: { morning: false, afternoon: true, evening: true },
+                friday: { morning: false, afternoon: true, evening: true },
+                saturday: { morning: true, afternoon: true, evening: true },
+                sunday: { morning: true, afternoon: true, evening: false }
+            },
+            tier: 'free'
+        });
+        await demoUser2.save();
+        console.log('Created Demo User 2 (Jordan) with ID:', demoUser2._id);
 
         console.log('Database seeded successfully!');
         process.exit(0);

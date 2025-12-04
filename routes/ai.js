@@ -11,11 +11,14 @@ const anthropic = new Anthropic({
 router.post('/generate-activity', async (req, res) => {
     try {
         const { eventId } = req.body;
-        const event = await Event.findById(eventId).populate('groupMembers');
+        const event = await Event.findById(eventId);
         
-        const hobbies = event.groupMembers.flatMap(member => member.hobbies);
+        const userIds = event.groupMembers.map(m => m.userId);
+        const users = await User.find({ _id: { $in: userIds } });
+        
+        const hobbies = users.flatMap(user => user.hobbies);
         const uniqueHobbies = [...new Set(hobbies)];
-        const location = event.groupMembers[0].location;
+        const location = users[0].location;
 
         const message = await anthropic.messages.create({
             model: 'claude-3-haiku-20240307',

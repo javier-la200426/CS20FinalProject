@@ -7,13 +7,15 @@ const eventSchema = new mongoose.Schema({
     scheduledTime: String,
     scheduledDate: String,
     groupMembers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        status: {
+            type: String,
+            default: 'pending'
+        }
     }],
-    status: {
-        type: String,
-        default: 'pending'
-    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -21,4 +23,3 @@ const eventSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Event', eventSchema);
-

@@ -13,6 +13,13 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="events.html">Events</a></li>
             <li><a href="preferences.html">Preferences</a></li>
+            <li class="user-greeting">Hi, <span id="user-name-display">User</span>!</li>
+            <li>
+                <select id="user-switcher" class="user-switcher">
+                    <option value="000000000000000000000001">Alex Demo</option>
+                    <option value="000000000000000000000002">Jordan Demo</option>
+                </select>
+            </li>
         </ul>
     </nav>
 
@@ -33,7 +40,29 @@
                 <p><strong>Description:</strong> <span id="activity-description">Loading...</span></p>
                 <p><strong>Location:</strong> <span id="event-location">Loading...</span></p>
                 <p><strong>When:</strong> <span id="event-time">Loading...</span></p>
-                <p><strong>Status:</strong> <span id="event-status">Loading...</span></p>
+                <p><strong>Your Status:</strong> <span id="event-status">Loading...</span></p>
+            </div>
+
+            <div class="event-stats hidden" id="event-stats">
+                <h3>Group Responses</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="stats-total">0</span>
+                        <span class="stat-label">Invited</span>
+                    </div>
+                    <div class="stat-item stat-accepted">
+                        <span class="stat-number" id="stats-accepted">0</span>
+                        <span class="stat-label">Accepted</span>
+                    </div>
+                    <div class="stat-item stat-declined">
+                        <span class="stat-number" id="stats-declined">0</span>
+                        <span class="stat-label">Declined</span>
+                    </div>
+                    <div class="stat-item stat-pending">
+                        <span class="stat-number" id="stats-pending">0</span>
+                        <span class="stat-label">Pending</span>
+                    </div>
+                </div>
             </div>
 
             <div class="button-group" id="action-buttons">
@@ -48,4 +77,3 @@
     <script src="js/events.js"></script>
 </body>
 </html>
-

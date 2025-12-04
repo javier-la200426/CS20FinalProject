@@ -1,8 +1,33 @@
 const API_URL = '';
-const CURRENT_USER_ID = '000000000000000000000001';
+let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
 let currentEvent = null;
 let adCountdown = 5;
+let currentUserName = '';
+
+function initUserSwitcher() {
+    const switcher = document.getElementById('user-switcher');
+    if (switcher) {
+        switcher.value = CURRENT_USER_ID;
+        switcher.addEventListener('change', function() {
+            localStorage.setItem('currentUserId', this.value);
+            window.location.reload();
+        });
+    }
+}
+
+async function loadUserName() {
+    try {
+        const response = await fetch(`${API_URL}/api/users/${CURRENT_USER_ID}`);
+        const user = await response.json();
+        if (user && user.name) {
+            currentUserName = user.name;
+            document.getElementById('user-name-display').textContent = user.name;
+        }
+    } catch (error) {
+        console.log('Could not load user name');
+    }
+}
 
 function showAd(callback) {
     const adSection = document.getElementById('ad-section');
@@ -62,8 +87,11 @@ async function generateNewEvent() {
         });
         const updatedEvent = await aiResponse.json();
 
-        currentEvent = updatedEvent;
-        displayEvent(updatedEvent);
+        const eventResponse = await fetch(`${API_URL}/api/events/user/${CURRENT_USER_ID}`);
+        const finalEvent = await eventResponse.json();
+
+        currentEvent = finalEvent;
+        displayEvent(finalEvent);
     } catch (error) {
         document.getElementById('event-details').innerHTML = '<p>Error generating event. Please try again.</p>';
     }
@@ -76,12 +104,23 @@ function displayEvent(event) {
     document.getElementById('event-time').textContent = event.scheduledTime;
     
     const statusSpan = document.getElementById('event-status');
-    statusSpan.textContent = event.status.charAt(0).toUpperCase() + event.status.slice(1);
-    statusSpan.className = `status-${event.status}`;
+    const userStatus = event.userStatus || 'pending';
+    statusSpan.textContent = userStatus.charAt(0).toUpperCase() + userStatus.slice(1);
+    statusSpan.className = `status-${userStatus}`;
+
+    if (event.stats) {
+        document.getElementById('stats-total').textContent = event.stats.total;
+        document.getElementById('stats-accepted').textContent = event.stats.accepted;
+        document.getElementById('stats-declined').textContent = event.stats.declined;
+        document.getElementById('stats-pending').textContent = event.stats.pending;
+        document.getElementById('event-stats').classList.remove('hidden');
+    }
 
     const actionButtons = document.getElementById('action-buttons');
-    if (event.status !== 'pending') {
+    if (userStatus !== 'pending') {
         actionButtons.classList.add('hidden');
+    } else {
+        actionButtons.classList.remove('hidden');
     }
 }
 
@@ -89,7 +128,7 @@ async function acceptEvent() {
     if (!currentEvent) return;
 
     try {
-        const response = await fetch(`${API_URL}/api/events/${currentEvent._id}/accept`, {
+        const response = await fetch(`${API_URL}/api/events/${currentEvent._id}/accept/${CURRENT_USER_ID}`, {
             method: 'PUT'
         });
         const updatedEvent = await response.json();
@@ -105,7 +144,7 @@ async function declineEvent() {
     if (!currentEvent) return;
 
     try {
-        const response = await fetch(`${API_URL}/api/events/${currentEvent._id}/decline`, {
+        const response = await fetch(`${API_URL}/api/events/${currentEvent._id}/decline/${CURRENT_USER_ID}`, {
             method: 'PUT'
         });
         const updatedEvent = await response.json();
@@ -127,5 +166,6 @@ function showMessage(text, type) {
 document.getElementById('accept-btn').addEventListener('click', acceptEvent);
 document.getElementById('decline-btn').addEventListener('click', declineEvent);
 
+initUserSwitcher();
+loadUserName();
 checkExistingEvent();
-

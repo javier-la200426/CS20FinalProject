@@ -215,6 +215,74 @@ h2 {
     color: #721c24;
 }
 
+.user-greeting {
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+}
+
+.user-switcher {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.event-stats {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f0f8ff;
+    border-radius: 8px;
+}
+
+.event-stats h3 {
+    margin-bottom: 15px;
+    color: #4a90a4;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px 25px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    display: block;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.stat-accepted .stat-number {
+    color: #28a745;
+}
+
+.stat-declined .stat-number {
+    color: #dc3545;
+}
+
+.stat-pending .stat-number {
+    color: #ffc107;
+}
+
 .availability-grid {
     display: flex;
     flex-direction: column;

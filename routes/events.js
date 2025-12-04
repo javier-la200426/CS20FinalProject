@@ -6,9 +6,27 @@ const User = require('../models/User');
 router.get('/user/:userId', async (req, res) => {
     try {
         const event = await Event.findOne({ 
-            groupMembers: req.params.userId 
+            'groupMembers.userId': req.params.userId 
         }).sort({ createdAt: -1 });
-        res.json(event);
+        
+        if (event) {
+            const userMember = event.groupMembers.find(
+                m => m.userId.toString() === req.params.userId
+            );
+            const response = {
+                ...event.toObject(),
+                userStatus: userMember ? userMember.status : 'pending',
+                stats: {
+                    total: event.groupMembers.length,
+                    accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
+                    declined: event.groupMembers.filter(m => m.status === 'declined').length,
+                    pending: event.groupMembers.filter(m => m.status === 'pending').length
+                }
+            };
+            res.json(response);
+        } else {
+            res.json(null);
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -19,12 +37,23 @@ router.post('/generate', async (req, res) => {
         const { userId } = req.body;
         const currentUser = await User.findById(userId);
         
+        const existingEvent = await Event.findOne({
+            'groupMembers.userId': userId
+        }).sort({ createdAt: -1 });
+        
+        if (existingEvent) {
+            return res.json(existingEvent);
+        }
+        
         const matchingUsers = await User.find({
             _id: { $ne: userId },
             hobbies: { $in: currentUser.hobbies }
         }).limit(4);
 
-        const allMembers = [userId, ...matchingUsers.map(u => u._id)];
+        const groupMembers = [
+            { userId: userId, status: 'pending' },
+            ...matchingUsers.map(u => ({ userId: u._id, status: 'pending' }))
+        ];
 
         const event = new Event({
             activityName: 'Activity will be generated',
@@ -32,8 +61,7 @@ router.post('/generate', async (req, res) => {
             location: currentUser.location,
             scheduledTime: '2:00 PM',
             scheduledDate: 'Saturday',
-            groupMembers: allMembers,
-            status: 'pending'
+            groupMembers: groupMembers
         });
 
         await event.save();
@@ -43,31 +71,60 @@ router.post('/generate', async (req, res) => {
     }
 });
 
-router.put('/:id/accept', async (req, res) => {
+router.put('/:id/accept/:userId', async (req, res) => {
     try {
-        const event = await Event.findByIdAndUpdate(
-            req.params.id, 
-            { status: 'accepted' }, 
-            { new: true }
+        const event = await Event.findById(req.params.id);
+        const memberIndex = event.groupMembers.findIndex(
+            m => m.userId.toString() === req.params.userId
         );
-        res.json(event);
+        
+        if (memberIndex !== -1) {
+            event.groupMembers[memberIndex].status = 'accepted';
+            await event.save();
+        }
+        
+        const response = {
+            ...event.toObject(),
+            userStatus: 'accepted',
+            stats: {
+                total: event.groupMembers.length,
+                accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
+                declined: event.groupMembers.filter(m => m.status === 'declined').length,
+                pending: event.groupMembers.filter(m => m.status === 'pending').length
+            }
+        };
+        res.json(response);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-router.put('/:id/decline', async (req, res) => {
+router.put('/:id/decline/:userId', async (req, res) => {
     try {
-        const event = await Event.findByIdAndUpdate(
-            req.params.id, 
-            { status: 'declined' }, 
-            { new: true }
+        const event = await Event.findById(req.params.id);
+        const memberIndex = event.groupMembers.findIndex(
+            m => m.userId.toString() === req.params.userId
         );
-        res.json(event);
+        
+        if (memberIndex !== -1) {
+            event.groupMembers[memberIndex].status = 'declined';
+            await event.save();
+        }
+        
+        const response = {
+            ...event.toObject(),
+            userStatus: 'declined',
+            stats: {
+                total: event.groupMembers.length,
+                accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
+                declined: event.groupMembers.filter(m => m.status === 'declined').length,
+                pending: event.groupMembers.filter(m => m.status === 'pending').length
+            }
+        };
+        res.json(response);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
 module.exports = router;
-
