@@ -89,19 +89,31 @@ router.post('/generate', async (req, res) => {
         
         const DEMO_USER_IDS = ['000000000000000000000001', '000000000000000000000002'];
         
-        const matchingUsers = allUsers.filter(user => {
-            const commonHobbies = countCommonHobbies(user.hobbies, currentUser.hobbies);
+        // New algorithm: Build group where ALL members share 2+ hobbies
+        // Prioritize demo users, then find matches that maintain universal overlap
+        const demoUsers = allUsers.filter(user => DEMO_USER_IDS.includes(user._id.toString()));
+        const regularUsers = allUsers.filter(user => !DEMO_USER_IDS.includes(user._id.toString()));
+        const usersToCheck = [...demoUsers, ...regularUsers];
+
+        let mustHaveHobbies = [...currentUser.hobbies];
+        const matchedUsers = [];
+
+        for (const user of usersToCheck) {
+            if (matchedUsers.length >= 4) break;
+            if (mustHaveHobbies.length < 2) break;
+
+            const commonWithMustHave = countCommonHobbies(user.hobbies, mustHaveHobbies);
             const sameState = getState(user.location) === currentState;
             const hasTimeOverlap = hasOverlappingAvailability(user.availability, currentUser.availability);
-            
-            return commonHobbies >= 2 && sameState && hasTimeOverlap;
-        }).sort((a, b) => {
-            const aIsDemo = DEMO_USER_IDS.includes(a._id.toString());
-            const bIsDemo = DEMO_USER_IDS.includes(b._id.toString());
-            if (aIsDemo && !bIsDemo) return -1; // Demo user goes first
-            if (!aIsDemo && bIsDemo) return 1; // Non-demo goes after
-            return 0; // Keep same order
-        }).slice(0, 4);
+
+            if (commonWithMustHave >= 2 && sameState && hasTimeOverlap) {
+                matchedUsers.push(user);
+                // Update mustHaveHobbies to only hobbies ALL matched users share
+                mustHaveHobbies = mustHaveHobbies.filter(hobby => user.hobbies.includes(hobby));
+            }
+        }
+
+        const matchingUsers = matchedUsers;
 
         const groupMembers = [
             { userId: userId, status: 'pending' },

@@ -15,9 +15,13 @@ router.post('/generate-activity', async (req, res) => {
         
         const userIds = event.groupMembers.map(m => m.userId);
         const users = await User.find({ _id: { $in: userIds } });
-        
-        const hobbies = users.flatMap(user => user.hobbies);
-        const uniqueHobbies = [...new Set(hobbies)];
+
+        // Find hobbies that ALL users share (universal overlap)
+        let universalHobbies = users[0].hobbies;
+        for (let i = 1; i < users.length; i++) {
+            universalHobbies = universalHobbies.filter(hobby => users[i].hobbies.includes(hobby));
+        }
+
         const locations = users.map(user => user.location);
         const uniqueLocations = [...new Set(locations)];
 
@@ -26,14 +30,15 @@ router.post('/generate-activity', async (req, res) => {
             max_tokens: 400,
             messages: [{
                 role: 'user',
-                content: `Suggest one activity for 5 friends who enjoy: ${uniqueHobbies.join(', ')}.
+                content: `Suggest one activity for 5 friends who ALL enjoy: ${universalHobbies.join(', ')}.
 
 User locations: ${uniqueLocations.join(', ')}
 
 IMPORTANT:
-1. Find a CENTRAL or CONVENIENT location that works for all users based on their locations
-2. Provide a SPECIFIC venue name and exact street address, not just a generic location
-3. Choose a location that minimizes travel for everyone
+1. The activity MUST involve the hobbies listed above - these are hobbies ALL users share
+2. Find a CENTRAL or CONVENIENT location that works for all users based on their locations
+3. Provide a SPECIFIC venue name and exact street address, not just a generic location
+4. Choose a location that minimizes travel for everyone
 
 Respond ONLY in this exact format with no extra text:
 Activity Name | Short description (1-2 sentences) | Specific Venue Name, Full Street Address | Day and Time
