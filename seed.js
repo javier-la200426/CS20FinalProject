@@ -66,11 +66,11 @@ async function seedDatabase() {
             availability: {
                 monday: { morning: false, afternoon: false, evening: false },
                 tuesday: { morning: false, afternoon: false, evening: false },
-                wednesday: { morning: false, afternoon: true, evening: true },
-                thursday: { morning: false, afternoon: true, evening: true },
-                friday: { morning: false, afternoon: true, evening: true },
-                saturday: { morning: true, afternoon: true, evening: true },
-                sunday: { morning: true, afternoon: true, evening: false }
+                wednesday: { morning: false, afternoon: false, evening: false },
+                thursday: { morning: false, afternoon: false, evening: false },
+                friday: { morning: false, afternoon: false, evening: true },
+                saturday: { morning: false, afternoon: true, evening: false },
+                sunday: { morning: false, afternoon: false, evening: false }
             },
             tier: 'free'
         });
@@ -83,16 +83,16 @@ async function seedDatabase() {
             age: 28,
             email: 'jordan@email.com',
             phone: '555-987-6543',
-            location: 'Boston, MA',
-            hobbies: ['hiking', 'gaming', 'movies'],
+            location: 'Cambridge, MA',
+            hobbies: ['hiking', 'gaming', 'music'],
             availability: {
-                monday: { morning: false, afternoon: false, evening: false },
-                tuesday: { morning: false, afternoon: false, evening: false },
-                wednesday: { morning: false, afternoon: true, evening: true },
-                thursday: { morning: false, afternoon: true, evening: true },
-                friday: { morning: false, afternoon: true, evening: true },
-                saturday: { morning: true, afternoon: true, evening: true },
-                sunday: { morning: true, afternoon: true, evening: false }
+                monday: { morning: true, afternoon: false, evening: false },
+                tuesday: { morning: true, afternoon: false, evening: false },
+                wednesday: { morning: false, afternoon: false, evening: false },
+                thursday: { morning: false, afternoon: false, evening: false },
+                friday: { morning: false, afternoon: false, evening: false },
+                saturday: { morning: false, afternoon: true, evening: false },
+                sunday: { morning: false, afternoon: false, evening: false }
             },
             tier: 'free'
         });

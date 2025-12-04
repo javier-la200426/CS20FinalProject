@@ -18,19 +18,27 @@ router.post('/generate-activity', async (req, res) => {
         
         const hobbies = users.flatMap(user => user.hobbies);
         const uniqueHobbies = [...new Set(hobbies)];
-        const location = users[0].location;
+        const locations = users.map(user => user.location);
+        const uniqueLocations = [...new Set(locations)];
 
         const message = await anthropic.messages.create({
             model: 'claude-3-haiku-20240307',
-            max_tokens: 300,
+            max_tokens: 400,
             messages: [{
                 role: 'user',
-                content: `Suggest one activity for 5 friends who enjoy: ${uniqueHobbies.join(', ')}. Location: ${location}. 
+                content: `Suggest one activity for 5 friends who enjoy: ${uniqueHobbies.join(', ')}.
+
+User locations: ${uniqueLocations.join(', ')}
+
+IMPORTANT:
+1. Find a CENTRAL or CONVENIENT location that works for all users based on their locations
+2. Provide a SPECIFIC venue name and exact street address, not just a generic location
+3. Choose a location that minimizes travel for everyone
 
 Respond ONLY in this exact format with no extra text:
-Activity Name | Short description (1-2 sentences) | Day and Time
+Activity Name | Short description (1-2 sentences) | Specific Venue Name, Full Street Address | Day and Time
 
-Example: Beach Volleyball | Play volleyball at Carson Beach with amazing ocean views. | Saturday 2:00 PM`
+Example: Beach Volleyball | Play volleyball at Carson Beach with amazing ocean views. | Carson Beach, 1 Day Boulevard, Boston, MA 02125 | Saturday 2:00 PM`
             }]
         });
 
@@ -40,7 +48,8 @@ Example: Beach Volleyball | Play volleyball at Carson Beach with amazing ocean v
         const updatedEvent = await Event.findByIdAndUpdate(eventId, {
             activityName: parts[0] || 'Group Activity',
             activityDescription: parts[1] || 'A fun activity for the group',
-            scheduledTime: parts[2] || '2:00 PM Saturday'
+            location: parts[2] || uniqueLocations[0],
+            scheduledTime: parts[3] || '2:00 PM Saturday'
         }, { new: true });
 
         res.json(updatedEvent);

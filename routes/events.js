@@ -3,6 +3,34 @@ const router = express.Router();
 const Event = require('../models/Event');
 const User = require('../models/User');
 
+function getState(location) {
+    if (!location) return '';
+    const parts = location.split(',');
+    if (parts.length < 2) return location.trim().toLowerCase();
+    return parts[1].trim().toLowerCase();
+}
+
+function countCommonHobbies(arr1, arr2) {
+    if (!arr1 || !arr2) return 0;
+    return arr1.filter(hobby => arr2.includes(hobby)).length;
+}
+
+function hasOverlappingAvailability(avail1, avail2) {
+    if (!avail1 || !avail2) return false;
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const times = ['morning', 'afternoon', 'evening'];
+    
+    for (const day of days) {
+        for (const time of times) {
+            if (avail1[day] && avail2[day] && 
+                avail1[day][time] && avail2[day][time]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 router.get('/user/:userId', async (req, res) => {
     try {
         const event = await Event.findOne({ 
@@ -45,10 +73,16 @@ router.post('/generate', async (req, res) => {
             return res.json(existingEvent);
         }
         
-        const matchingUsers = await User.find({
-            _id: { $ne: userId },
-            hobbies: { $in: currentUser.hobbies }
-        }).limit(4);
+        const currentState = getState(currentUser.location);
+        const allUsers = await User.find({ _id: { $ne: userId } });
+        
+        const matchingUsers = allUsers.filter(user => {
+            const commonHobbies = countCommonHobbies(user.hobbies, currentUser.hobbies);
+            const sameState = getState(user.location) === currentState;
+            const hasTimeOverlap = hasOverlappingAvailability(user.availability, currentUser.availability);
+            
+            return commonHobbies >= 2 && sameState && hasTimeOverlap;
+        }).slice(0, 4);
 
         const groupMembers = [
             { userId: userId, status: 'pending' },
