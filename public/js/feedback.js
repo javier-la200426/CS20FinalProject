@@ -88,7 +88,10 @@ function submitFeedback(e) {
     const eventComments = document.getElementById("event-comments").value;
     const additionalComments = document.getElementById("comments").value;
 
-    if (meetAgain == "") {
+    if (rating == 0) {
+        alert("Form is incomplete. Please select a star rating.");
+        return false;
+    } else if (meetAgain == "") {
         alert("Form is incomplete. Please select an option for the second question.");
         document.getElementById("no").focus();
         return false;
@@ -96,9 +99,21 @@ function submitFeedback(e) {
         alert("Form is incomplete. Please select an option for the third question.");
         document.getElementById("bad").focus();
         return false;
+    } else if (groupComments.trim() == "") {
+        alert("Form is incomplete. Please enter group member comments.");
+        document.getElementById("group-comments").focus();
+        return false;
     } else if (proposedEvent == "") {
         alert("Form is incomplete. Please select an option for the fifth question.");
         document.getElementById("not-used").focus();
+        return false;
+    } else if (proposedEvent == "didn't use" && eventComments.trim() == "") {
+        alert("Form is incomplete. Please enter proposed event comments.");
+        document.getElementById("event-comments").focus();
+        return false;
+    } else if (additionalComments.trim() == "") {
+        alert("Form is incomplete. Please enter additional comments.");
+        document.getElementById("comments").focus();
         return false;
     }
 
