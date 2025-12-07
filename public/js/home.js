@@ -1,6 +1,62 @@
 const API_URL = '';
 let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
+const text = "Meet new friends through shared experiences."; // let the title appear from word to word
+const typingElement = document.getElementById("typing-text");
+
+let index = 0;
+function typeLetter() {
+    if (index < text.length) {
+        typingElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeLetter, 45); // typing speed (ms)
+    }
+}
+
+typeLetter();
+
+function animateCounters() {
+    const counters = document.querySelectorAll(".metric-number");
+
+    counters.forEach(counter => {
+        const target = +counter.dataset.target;
+        let current = 0;
+
+        const increment = target / 140; // 60 animation frames
+
+        function update() {
+            current += increment;
+
+            if (current < target) {
+                counter.textContent = Math.floor(current).toLocaleString();
+                requestAnimationFrame(update);
+            } else {
+                counter.textContent = target.toLocaleString();
+            }
+        }
+
+        update();
+    });
+}
+
+// Detect when metrics are in view
+const metricsSection = document.querySelector(".metrics");
+let hasAnimated = false;
+
+function startCountersIfVisible() {
+    const rect = metricsSection.getBoundingClientRect();
+
+    if (!hasAnimated && rect.top < window.innerHeight) {
+        animateCounters();
+        hasAnimated = true;
+    }
+}
+
+// Run on scroll and on load
+window.addEventListener("scroll", startCountersIfVisible);
+window.addEventListener("load", startCountersIfVisible);
+
+
 function initUserSwitcher() {
     const switcher = document.getElementById('user-switcher');
     if (switcher) {
@@ -39,7 +95,10 @@ async function loadEventStatus() {
         if (!event || !event._id) {
             statusDiv.innerHTML = `
                 <p>You don't have an event for this week yet.</p>
+                <div class="btn-row">
                 <a href="events.html" class="btn">Get Your Event</a>
+                <a href="register.html" class="btn-secondary">Register First</a>
+                </div>
             `;
             return;
         }

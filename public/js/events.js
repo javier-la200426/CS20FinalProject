@@ -2,7 +2,7 @@ const API_URL = '';
 let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
 let currentEvent = null;
-let adCountdown = 5;
+let adCountdown = 10;
 let currentUserName = '';
 
 function initUserSwitcher() {
@@ -44,7 +44,7 @@ function showAd(callback) {
     adSection.classList.remove('hidden');
     eventSection.classList.add('hidden');
 
-    adCountdown = 5; // Reset countdown
+    adCountdown = 10; // Reset countdown
 
     const interval = setInterval(() => {
         adCountdown--;

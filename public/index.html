@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FriendFinder - Home</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <nav>
-        <a href="index.html" class="logo">FriendFinder</a>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="FriendFinder Logo" class="logo-img">
+        </a>
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="events.html">Events</a></li>
@@ -24,10 +28,55 @@
         </ul>
     </nav>
 
-    <div class="container">
-        <div class="card">
-            <h1>Welcome to FriendFinder!</h1>
-            <p>Find your friend group and connect with like-minded people.</p>
+    <div class="hero">
+        <div class="hero-left">
+            <h1 id="typing-text"></h1>
+            <p>
+                FriendFinder connects people based on shared interests and availability.
+                Enjoy curated events or create your own group adventures.
+            </p>
+
+            <div class="event-block">
+                <h2>Your Weekly Event</h2>
+                <div id="event-status">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="videos/homepagevideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+<section class="metrics">
+    <div class="metric-item">
+        <div class="metric-icon">🤝</div>
+        <div class="metric-number" data-target="12482">0</div>
+        <div class="metric-label">friendships formed</div>
+    </div>
+
+    <div class="metric-item">
+        <div class="metric-icon">📅</div>
+        <div class="metric-number" data-target="238">0</div>
+        <div class="metric-label">events this week</div>
+    </div>
+
+    <div class="metric-item">
+        <div class="metric-icon">🧑‍🤝‍🧑</div>
+        <div class="metric-number" data-target="52900">0</div>
+        <div class="metric-label">active members</div>
+    </div>
+</section>
+
+</section>
+
+    <!-- <div class="container"> -->
+    <!-- <div class="card">
+            <h1>Meet new friends through shared experiences.</h1>
+            <p>FriendFinder connects people based on shared interests and availability.  
+            Enjoy curated events or create your own group adventures.</p>
         </div>
 
         <div class="card" id="event-status-card">
@@ -35,10 +84,10 @@
             <div id="event-status">
                 <p>Loading...</p>
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
 
     <script src="js/home.js"></script>
 </body>
-</html>
 
+</html>

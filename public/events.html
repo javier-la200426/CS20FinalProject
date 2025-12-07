@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FriendFinder - Events</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <nav>
-        <a href="index.html" class="logo">FriendFinder</a>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="FriendFinder Logo" class="logo-img">
+        </a>
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="events.html">Events</a></li>
@@ -23,26 +27,53 @@
             </li>
         </ul>
     </nav>
+        <div class="card stagger" id="button-section">
+            <h1>Your Event This Week</h1>
+            <p>Click the button below to generate your weekly event!</p>
+            <button class="btn" id="get-event-btn">Get Your Event</button>
+        </div>
+        <div class="card hidden" id="ad-section"> <!-- <h2>Advertisement</h2> -->
+            <video id="ad-video" class="ad-video" autoplay muted loop playsinline>
+                <source src="/videos/advertisement1.mp4" type="video/mp4">
+            </video>
+            <p id="ad-countdown">Events will show in 10 seconds...</p>
+            <button id="premium-btn" class="premium-btn">Get Premium to Skip Ad</button>
+        </div>
+    <!-- <div class="button-hero" id="button-section">
 
-    <div class="container">
-        <div class="card" id="button-section">
+        <div class="button-left">
+            <img src="images/events2.png" class="button-image" alt="Event Intro">
+        </div>
+
+        <div class="button-right stagger">
             <h1>Your Event This Week</h1>
             <p>Click the button below to generate your weekly event!</p>
             <button class="btn" id="get-event-btn">Get Your Event</button>
         </div>
 
-        <div class="card hidden" id="ad-section">
-            <div class="ad-container">
-                <h2>Advertisement</h2>
-                 <img src="ads/sample-ad.jpg" class="ad-banner">
-                <p id="ad-countdown">Skipping in 5 seconds...</p>
-            </div>
-        </div>
+    </div>
+    <div id="ad-section" class="hidden ad-hero">
+        <video id="ad-video" autoplay muted loop playsinline>
+            <source src="/videos/advertisement1.mp4" type="video/mp4">
+        </video>
+        <p id="ad-countdown">Skipping in 10 seconds...</p>
+        <button id="premium-btn" class="premium-btn">Get Premium to Skip Ad</button>
+    </div> -->
 
-        <div class="card hidden" id="event-section">
+    <!-- <div class="card hidden" id="ad-section">
+        <div class="ad-container">
+            <video id="ad-video" autoplay muted loop playsinline>
+                <source src="/videos/advertisement1.mp4" type="video/mp4">
+            </video>
+            <p id="ad-countdown">Skipping in 10 seconds...</p>
+        </div>
+    </div> -->
+
+    <div class="event-hero hidden" id="event-section">
+        <div class="event-left stagger">
             <h1>Your Event This Week</h1>
-            
-            <div class="event-details" id="event-details">
+
+            <div class="event-details">
                 <p><strong>Activity:</strong> <span id="activity-name">Loading...</span></p>
                 <p><strong>Description:</strong> <span id="activity-description">Loading...</span></p>
                 <p><strong>Location:</strong> <span id="event-location">Loading...</span></p>
@@ -79,6 +110,10 @@
 
             <div id="status-message" class="hidden"></div>
         </div>
+
+        <div class="event-right">
+            <img src="images/events1.png" class="event-image" alt="Event Illustration">
+        </div>
     </div>
 
     <div class="reset-button-container" id="reset-container">
@@ -98,7 +133,8 @@
                 <span class="rule-number">1</span>
                 <div>
                     <strong>At least 2 hobbies shared by ALL group members</strong>
-                    <p>Every person in your group must share at least 2 hobbies in common. This ensures the AI suggests activities everyone will enjoy!</p>
+                    <p>Every person in your group must share at least 2 hobbies in common. This ensures the AI suggests
+                        activities everyone will enjoy!</p>
                 </div>
             </div>
             <div class="rule-item">
@@ -128,4 +164,5 @@
 
     <script src="js/events.js"></script>
 </body>
+
 </html>
