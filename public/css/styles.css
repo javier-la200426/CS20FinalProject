@@ -259,19 +259,22 @@ h2 {
 
 
 .btn-accept {
-    background-color: #28a745;
+    background-color: #2d3436;
 }
 
 .btn-accept:hover {
-    background-color: #218838;
+    background-color: #485460;
 }
 
 .btn-decline {
-    background-color: #dc3545;
+    background-color: #fff;
+    color: #2d3436;
+    border: 1px solid #ddd;
 }
 
 .btn-decline:hover {
-    background-color: #c82333;
+    background-color: #f8f9fa;
+    border-color: #2d3436;
 }
 
 .form-group {
@@ -317,10 +320,11 @@ h2 {
 }
 
 .event-details {
-    background: #f9f9f9;
+    background: #fafafa;
     padding: 20px;
     border-radius: 8px;
     margin: 20px 0;
+    border: 1px solid #eee;
 }
 
 .event-details p {
@@ -328,21 +332,21 @@ h2 {
 }
 
 .event-details strong {
-    color: #4a90a4;
+    color: #2d3436;
 }
 
 .status-pending {
-    color: #ffc107;
+    color: #636e72;
     font-weight: bold;
 }
 
 .status-accepted {
-    color: #28a745;
+    color: #00b894;
     font-weight: bold;
 }
 
 .status-declined {
-    color: #dc3545;
+    color: #b2bec3;
     font-weight: bold;
 }
 
@@ -370,7 +374,7 @@ h2 {
 
 .countdown {
     font-size: 24px;
-    color: #4a90a4;
+    color: #333;
     margin: 10px 0;
 }
 
@@ -507,13 +511,14 @@ h2 {
 .event-stats {
     margin: 20px 0;
     padding: 20px;
-    background: #f0f8ff;
+    background: #fafafa;
     border-radius: 8px;
+    border: 1px solid #eee;
 }
 
 .event-stats h3 {
     margin-bottom: 15px;
-    color: #4a90a4;
+    color: #333;
 }
 
 .stats-grid {
@@ -543,15 +548,15 @@ h2 {
 }
 
 .stat-accepted .stat-number {
-    color: #28a745;
+    color: #00b894;
 }
 
 .stat-declined .stat-number {
-    color: #dc3545;
+    color: #b2bec3;
 }
 
 .stat-pending .stat-number {
-    color: #ffc107;
+    color: #636e72;
 }
 
 .availability-grid {
@@ -590,7 +595,7 @@ h2 {
 }
 
 .success-box h2 {
-    color: #28a745;
+    color: #333;
     margin-bottom: 15px;
 }
 
@@ -616,7 +621,7 @@ h2 {
 }
 
 .feedback-done {
-    color: #28a745;
+    color: #333;
     font-weight: bold;
     margin-top: 15px;
 }
@@ -665,7 +670,7 @@ h2 {
 }
 
 .reset-btn {
-    background: #dc3545;
+    background: #333;
 }
 
 .reset-btn:hover {
@@ -673,7 +678,7 @@ h2 {
 }
 
 .rules-btn {
-    background: #4a90a4;
+    background: #666;
 }
 
 .rules-btn:hover {
@@ -707,7 +712,7 @@ h2 {
 }
 
 .rules-content h2 {
-    color: #4a90a4;
+    color: #333;
     margin-bottom: 15px;
 }
 
@@ -734,7 +739,7 @@ h2 {
 }
 
 .rule-number {
-    background: #4a90a4;
+    background: #333;
     color: white;
     width: 30px;
     height: 30px;
@@ -755,13 +760,14 @@ h2 {
 .rule-example {
     margin-top: 20px;
     padding: 15px;
-    background: #e8f4f8;
+    background: #fafafa;
     border-radius: 8px;
+    border: 1px solid #eee;
 }
 
 .rule-example h3 {
     margin-bottom: 10px;
-    color: #4a90a4;
+    color: #333;
 }
 
 .rule-example p {
@@ -770,7 +776,7 @@ h2 {
 }
 
 .match-result {
-    color: #28a745;
+    color: #333;
     font-weight: bold;
     margin-top: 10px;
 }
@@ -783,7 +789,7 @@ h2 {
 }
 
 .admin-link {
-    background: #ffc107;
+    background: #eee;
     padding: 5px 10px;
     border-radius: 5px;
     color: #333 !important;
@@ -809,7 +815,7 @@ h2 {
 }
 
 .tab-btn.active {
-    background: #4a90a4;
+    background: #333;
     color: white;
 }
 
@@ -833,7 +839,7 @@ h2 {
 }
 
 .admin-card-header {
-    background: #4a90a4;
+    background: #333;
     color: white;
     padding: 12px 15px;
     display: flex;
@@ -858,7 +864,7 @@ h2 {
 .btn-small {
     padding: 5px 12px;
     background: white;
-    color: #4a90a4;
+    color: #333;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -891,15 +897,15 @@ h2 {
 }
 
 .status-accepted {
-    color: #28a745;
+    color: #00b894;
 }
 
 .status-declined {
-    color: #dc3545;
+    color: #b2bec3;
 }
 
 .status-pending {
-    color: #ffc107;
+    color: #636e72;
 }
 
 .edit-modal {
