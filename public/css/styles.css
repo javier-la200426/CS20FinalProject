@@ -145,10 +145,9 @@ nav ul li a:hover {
 }
 
 .event-block {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 40px;
-    border-top: 1px solid #eee;
+    margin: 20px 0 0 0;
+    padding: 0;
+    border-top: none;
 }
 
 .event-block h2 {
@@ -1098,5 +1097,62 @@ h2 {
         gap: 24px;
         padding: 40px 20px;
     }
+
+    .availability-grid {
+        gap: 8px;
+    }
+
+    .day-row {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 8px;
+    }
+
+    .day-name {
+        width: 100%;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .day-row label {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .form-group p {
+        font-size: 12px !important;
+        line-height: 1.4;
+    }
 }
+
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    padding: 24px 36px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+footer p {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0;
+}
+
+footer a {
+    color: #2563eb;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+
 
