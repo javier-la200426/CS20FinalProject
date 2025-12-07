@@ -3,6 +3,7 @@ const router = express.Router();
 const Event = require('../models/Event');
 const User = require('../models/User');
 
+// pull state from location string (e.g., "Boston, MA" -> "ma")
 function getState(location) {
     if (!location) return '';
     const parts = location.split(',');
@@ -10,19 +11,21 @@ function getState(location) {
     return parts[1].trim().toLowerCase();
 }
 
+// count how many hobbies two people share
 function countCommonHobbies(arr1, arr2) {
     if (!arr1 || !arr2) return 0;
     return arr1.filter(hobby => arr2.includes(hobby)).length;
 }
 
+// check if two people have at least one overlapping time slot
 function hasOverlappingAvailability(avail1, avail2) {
     if (!avail1 || !avail2) return false;
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     const times = ['morning', 'afternoon', 'evening'];
-    
+
     for (const day of days) {
         for (const time of times) {
-            if (avail1[day] && avail2[day] && 
+            if (avail1[day] && avail2[day] &&
                 avail1[day][time] && avail2[day][time]) {
                 return true;
             }
@@ -31,6 +34,7 @@ function hasOverlappingAvailability(avail1, avail2) {
     return false;
 }
 
+// admin endpoint - get all events with member info
 router.get('/all', async (req, res) => {
     try {
         const events = await Event.find()
@@ -42,16 +46,18 @@ router.get('/all', async (req, res) => {
     }
 });
 
+// get a user's event with their status and group stats
 router.get('/user/:userId', async (req, res) => {
     try {
-        const event = await Event.findOne({ 
-            'groupMembers.userId': req.params.userId 
+        const event = await Event.findOne({
+            'groupMembers.userId': req.params.userId
         }).sort({ createdAt: -1 });
-        
+
         if (event) {
             const userMember = event.groupMembers.find(
                 m => m.userId.toString() === req.params.userId
             );
+            // add user's specific status and overall group stats
             const response = {
                 ...event.toObject(),
                 userStatus: userMember ? userMember.status : 'pending',
@@ -71,41 +77,47 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
+// matchmaking algorithm - this is the core of the whole app
 router.post('/generate', async (req, res) => {
     try {
         const { userId } = req.body;
         const currentUser = await User.findById(userId);
-        
+
+        // check if user already has an event
         const existingEvent = await Event.findOne({
             'groupMembers.userId': userId
         }).sort({ createdAt: -1 });
-        
+
         if (existingEvent) {
             return res.json(existingEvent);
         }
-        
+
         const currentState = getState(currentUser.location);
         const allUsers = await User.find({ _id: { $ne: userId } });
-        
+
+        // hardcoded demo users that we want to prioritize in matches
         const DEMO_USER_IDS = ['000000000000000000000001', '000000000000000000000002'];
-        
+
         // New algorithm: Build group where ALL members share 2+ hobbies
         // Prioritize demo users, then find matches that maintain universal overlap
         const demoUsers = allUsers.filter(user => DEMO_USER_IDS.includes(user._id.toString()));
         const regularUsers = allUsers.filter(user => !DEMO_USER_IDS.includes(user._id.toString()));
         const usersToCheck = [...demoUsers, ...regularUsers];
 
+        // start with current user's hobbies, narrow down as we add people
         let mustHaveHobbies = [...currentUser.hobbies];
         const matchedUsers = [];
 
+        // try to build a group of up to 4 people
         for (const user of usersToCheck) {
             if (matchedUsers.length >= 4) break;
-            if (mustHaveHobbies.length < 2) break;
+            if (mustHaveHobbies.length < 2) break; // can't match if we don't have 2+ shared hobbies
 
             const commonWithMustHave = countCommonHobbies(user.hobbies, mustHaveHobbies);
             const sameState = getState(user.location) === currentState;
             const hasTimeOverlap = hasOverlappingAvailability(user.availability, currentUser.availability);
 
+            // only add user if they share 2+ hobbies with everyone, same state, and have overlapping availability
             if (commonWithMustHave >= 2 && sameState && hasTimeOverlap) {
                 matchedUsers.push(user);
                 // Update mustHaveHobbies to only hobbies ALL matched users share
@@ -115,11 +127,13 @@ router.post('/generate', async (req, res) => {
 
         const matchingUsers = matchedUsers;
 
+        // build the group with current user + matched users
         const groupMembers = [
             { userId: userId, status: 'pending' },
             ...matchingUsers.map(u => ({ userId: u._id, status: 'pending' }))
         ];
 
+        // create event with placeholder info (AI will fill in details later)
         const event = new Event({
             activityName: 'Activity will be generated',
             activityDescription: 'Description pending',
@@ -136,18 +150,19 @@ router.post('/generate', async (req, res) => {
     }
 });
 
+// user accepts their event invitation
 router.put('/:id/accept/:userId', async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
         const memberIndex = event.groupMembers.findIndex(
             m => m.userId.toString() === req.params.userId
         );
-        
+
         if (memberIndex !== -1) {
             event.groupMembers[memberIndex].status = 'accepted';
             await event.save();
         }
-        
+
         const response = {
             ...event.toObject(),
             userStatus: 'accepted',
@@ -164,18 +179,19 @@ router.put('/:id/accept/:userId', async (req, res) => {
     }
 });
 
+// user declines their event invitation
 router.put('/:id/decline/:userId', async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
         const memberIndex = event.groupMembers.findIndex(
             m => m.userId.toString() === req.params.userId
         );
-        
+
         if (memberIndex !== -1) {
             event.groupMembers[memberIndex].status = 'declined';
             await event.save();
         }
-        
+
         const response = {
             ...event.toObject(),
             userStatus: 'declined',
@@ -192,6 +208,7 @@ router.put('/:id/decline/:userId', async (req, res) => {
     }
 });
 
+// admin only - delete all events to reset demo
 router.delete('/reset-all', async (req, res) => {
     try {
         await Event.deleteMany({});

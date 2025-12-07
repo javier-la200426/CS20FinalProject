@@ -1,6 +1,7 @@
 const API_URL = '';
 let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
+// dropdown to switch between demo users
 function initUserSwitcher() {
     const switcher = document.getElementById('user-switcher');
     if (switcher) {
@@ -29,9 +30,10 @@ async function loadUserName() {
     }
 }
 
+// show different content based on whether user has an event and their response status
 async function loadEventStatus() {
     const statusDiv = document.getElementById('event-status');
-    
+
     try {
         const response = await fetch(`${API_URL}/api/events/user/${CURRENT_USER_ID}`);
         const event = await response.json();

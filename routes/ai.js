@@ -4,15 +4,17 @@ const Anthropic = require('@anthropic-ai/sdk');
 const Event = require('../models/Event');
 const User = require('../models/User');
 
+// initialize claude api client
 const anthropic = new Anthropic({
     apiKey: process.env.CLAUDE_API_KEY
 });
 
+// use AI to generate a specific activity based on group's shared hobbies
 router.post('/generate-activity', async (req, res) => {
     try {
         const { eventId } = req.body;
         const event = await Event.findById(eventId);
-        
+
         const userIds = event.groupMembers.map(m => m.userId);
         const users = await User.find({ _id: { $in: userIds } });
 
@@ -25,6 +27,7 @@ router.post('/generate-activity', async (req, res) => {
         const locations = users.map(user => user.location);
         const uniqueLocations = [...new Set(locations)];
 
+        // ask claude to suggest a specific activity and venue
         const message = await anthropic.messages.create({
             model: 'claude-3-haiku-20240307',
             max_tokens: 400,
@@ -47,6 +50,7 @@ Example: Beach Volleyball | Play volleyball at Carson Beach with amazing ocean v
             }]
         });
 
+        // parse the AI response and update the event
         const response = message.content[0].text;
         const parts = response.split('|').map(p => p.trim());
 

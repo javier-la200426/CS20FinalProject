@@ -1,6 +1,7 @@
 const API_URL = '';
 let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
+// used to build availability grid
 const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const times = ['morning', 'afternoon', 'evening'];
 
@@ -65,14 +66,17 @@ async function loadPreferences() {
 
 const form = document.getElementById('preferences-form');
 
+// save user preferences to database
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    // collect checked hobbies
     const hobbies = [];
     document.querySelectorAll('input[name="hobbies"]:checked').forEach(cb => {
         hobbies.push(cb.value);
     });
 
+    // build availability object from checkboxes
     const availability = {};
     days.forEach(day => {
         availability[day] = {
