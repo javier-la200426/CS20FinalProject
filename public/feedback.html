@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FriendFinder - Feedback</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        function rate(star_num) {
+            stars = [...document.getElementsByClassName("fa-star")];
+            
+            stars.forEach(function(star){
+                star.classList.remove("rated");
+            });
+
+            for(let i = 0; i < star_num; i++) {
+                stars[i].classList.add("rated");
+            }
+        }
+
+        function checkExtra() {
+            trigger = [...document.getElementsByName("proposed")][0];
+            if (trigger.checked) {
+                document.getElementById("proposed-event").style.display = "block";
+            } else {
+                document.getElementById("proposed-event").style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -27,49 +50,109 @@
     </nav>
 
     <div class="container">
-        <div class="card">
-            <h1>Event Feedback</h1>
-            <p>Help us improve by sharing your experience!</p>
+        <div class="card feedback-card">
+            <h1>Tell Us About Your Experience!</h1>
+            <p>Help us improve future experiences for our users by completing
+                a brief survey.</p>
 
             <form id="feedback-form">
                 <div class="form-group">
-                    <label for="rating">Overall Rating (1-5)</label>
-                    <select id="rating" name="rating" required>
-                        <option value="">Select a rating</option>
-                        <option value="5">5 - Excellent</option>
-                        <option value="4">4 - Good</option>
-                        <option value="3">3 - Average</option>
-                        <option value="2">2 - Poor</option>
-                        <option value="1">1 - Terrible</option>
-                    </select>
+                    <label for="rating">What was your level of enjoyment of the event?</label>
+                    <div class="stars">
+                        <span onclick="rate(1)" class="fa fa-star"></span>
+                        <span onclick="rate(2)" class="fa fa-star"></span>
+                        <span onclick="rate(3)" class="fa fa-star"></span>
+                        <span onclick="rate(4)" class="fa fa-star"></span>
+                        <span onclick="rate(5)" class="fa fa-star"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="had-fun">Did you have fun?</label>
-                    <select id="had-fun" name="hadFun" required>
-                        <option value="">Select an option</option>
-                        <option value="yes">Yes</option>
-                        <option value="somewhat">Somewhat</option>
-                        <option value="no">No</option>
-                    </select>
+                    <label for="meet">Would you meet again with your group?</label>
+                    <div class="options">
+                        <div class="radio">
+                            <input type="radio" id="no" name="meet" value="no">
+                            <label for="no">No</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="maybe" name="meet" value="maybe">
+                            <label for="maybe">Maybe</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="yes" name="meet" value="yes">
+                            <label for="yes">Yes</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="meet-again">Would you meet with this group again?</label>
-                    <select id="meet-again" name="wouldMeetAgain" required>
-                        <option value="">Select an option</option>
-                        <option value="yes">Yes, definitely</option>
-                        <option value="maybe">Maybe</option>
-                        <option value="no">No</option>
-                    </select>
+                    <label for="interactions">Rate your interactions with your group:</label>
+                    <div class="options">
+                        <div class="radio">
+                            <input type="radio" id="bad" name="interactions" value="bad">
+                            <label for="bad">Bad</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="poor" name="interactions" value="poor">
+                            <label for="poor">Poor</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="average" name="interactions" value="average">
+                            <label for="average">Average</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="good" name="interactions" value="good">
+                            <label for="good">Good</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="excellent" name="interactions" value="excellent">
+                            <label for="excellent">Excellent</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="comments">Additional Comments</label>
+                    <label for="group-comments">Group member comments:</label>
+                    <textarea id="group-comments" name="group-comments" placeholder="Tell us about your group members..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="given-event">Rate the proposed event:</label>
+                    <div class="options">
+                        <div class="radio">
+                            <input type="radio" id="not-used" name="proposed" value="didn't use" onchange="checkExtra()">
+                            <label for="didn't use">Didn't Use</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="boring" name="proposed" value="boring" onchange="checkExtra()">
+                            <label for="boring">Boring</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="avg" name="proposed" value="average" onchange="checkExtra()">
+                            <label for="avg">Average</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="okay" name="proposed" value="good" onchange="checkExtra()">
+                            <label for="okay">Good</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="exciting" name="proposed" value="exciting" onchange="checkExtra()">
+                            <label for="exciting">Exciting</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="proposed-event">
+                    <label for="event-comments">Proposed event comments:</label>
+                    <textarea id="event-comments" name="event-comments" placeholder="Tell us how our proposed event can be improved..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Additional comments</label>
                     <textarea id="comments" name="comments" placeholder="Tell us more about your experience..."></textarea>
                 </div>
 
-                <button type="submit" class="btn">Submit Feedback</button>
+                <button type="submit" class="btn btn-centered">Submit Feedback</button>
             </form>
 
             <div id="feedback-message" class="hidden"></div>

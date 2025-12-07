@@ -55,11 +55,73 @@ async function checkExistingFeedback() {
     }
 }
 
-const form = document.getElementById('feedback-form');
-
-form.addEventListener('submit', async function(e) {
+function submitFeedback(e) {
     e.preventDefault();
     
+    const rating = [...document.getElementsByClassName("rated")].length;
+
+    let meetAgain = "";
+    let options = [...document.getElementsByName("meet")];
+    options.forEach(function(option){
+        if(option.checked) {
+            meetAgain = option.value;
+        }
+    });
+
+    let interactions = "";
+    options = [...document.getElementsByName("interactions")];
+    options.forEach(function(option){
+        if(option.checked) {
+            interactions = option.value;
+        }
+    });
+
+    let proposedEvent = "";
+    options = [...document.getElementsByName("proposed")];
+    options.forEach(function(option){
+        if(option.checked) {
+            proposedEvent = option.value;
+        }
+    });
+
+    const groupComments = document.getElementById("group-comments").value;
+    const eventComments = document.getElementById("event-comments").value;
+    const additionalComments = document.getElementById("comments").value;
+
+    if (rating == 0) {
+        alert("Form is incomplete. Please select a star rating.");
+        return false;
+    } else if (meetAgain == "") {
+        alert("Form is incomplete. Please select an option for the second question.");
+        document.getElementById("no").focus();
+        return false;
+    } else if (interactions == "") {
+        alert("Form is incomplete. Please select an option for the third question.");
+        document.getElementById("bad").focus();
+        return false;
+    } else if (groupComments.trim() == "") {
+        alert("Form is incomplete. Please enter group member comments.");
+        document.getElementById("group-comments").focus();
+        return false;
+    } else if (proposedEvent == "") {
+        alert("Form is incomplete. Please select an option for the fifth question.");
+        document.getElementById("not-used").focus();
+        return false;
+    } else if (proposedEvent == "didn't use" && eventComments.trim() == "") {
+        alert("Form is incomplete. Please enter proposed event comments.");
+        document.getElementById("event-comments").focus();
+        return false;
+    } else if (additionalComments.trim() == "") {
+        alert("Form is incomplete. Please enter additional comments.");
+        document.getElementById("comments").focus();
+        return false;
+    }
+
+    push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments);
+    return false;
+}
+
+async function push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments) {
     if (!currentEventId) {
         showMessage('No event found to give feedback for.', 'error');
         return;
@@ -68,10 +130,13 @@ form.addEventListener('submit', async function(e) {
     const formData = {
         eventId: currentEventId,
         userId: CURRENT_USER_ID,
-        rating: parseInt(document.getElementById('rating').value),
-        hadFun: document.getElementById('had-fun').value,
-        wouldMeetAgain: document.getElementById('meet-again').value,
-        comments: document.getElementById('comments').value
+        rating: rating,
+        wouldMeetAgain: meetAgain,
+        interactions: interactions,
+        groupComments: groupComments,
+        proposedEvent: proposedEvent,
+        eventComments: eventComments,
+        additionalComments: additionalComments
     };
 
     try {
@@ -91,7 +156,7 @@ form.addEventListener('submit', async function(e) {
     } catch (error) {
         showMessage('Error submitting feedback. Please try again.', 'error');
     }
-});
+}
 
 function showMessage(text, type) {
     const messageDiv = document.getElementById('feedback-message');
@@ -99,6 +164,9 @@ function showMessage(text, type) {
     messageDiv.className = `message message-${type}`;
     messageDiv.classList.remove('hidden');
 }
+
+const form = document.getElementById('feedback-form');
+form.addEventListener('submit', submitFeedback);
 
 initUserSwitcher();
 loadUserName();
