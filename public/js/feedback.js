@@ -55,11 +55,56 @@ async function checkExistingFeedback() {
     }
 }
 
-const form = document.getElementById('feedback-form');
+function submitFeedback() {
+    rating = [...document.getElementsByClassName("rated")].length;
 
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
+    meetAgain = ""
+    options = [...document.getElementsByName("meet")];
+    options.forEach(function(option){
+        if(option.checked) {
+            meetAgain = option.value;
+        }
+    });
+
+    interactions = ""
+    options = [...document.getElementsByName("interactions")];
+    options.forEach(function(option){
+        if(option.checked) {
+            interactions = option.value;
+        }
+    });
+
+    proposedEvent = ""
+    options = [...document.getElementsByName("proposed")];
+    options.forEach(function(option){
+        if(option.checked) {
+            proposedEvent = option.value;
+        }
+    });
+
+    groupComments = document.getElementById("group-comments").value;
+    eventComments = document.getElementById("event-comments").value;
+    additionalComments = document.getElementById("comments").value;
+
+    if (meetAgain == "") {
+        alert("Form is incomplete. Please select an option for the second question.");
+        document.getElementById("no").focus();
+        return false;
+    } else if (interactions == "") {
+        alert("Form is incomplete. Please select an option for the third question.");
+        document.getElementById("bad").focus();
+        return false;
+    } else if (proposedEvent == "") {
+        alert("Form is incomplete. Please select an option for the fifth question.");
+        document.getElementById("not-used").focus();
+        return false;
+    }
+
+    push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments);
+    return true;
+}
+
+async function push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments) {
     if (!currentEventId) {
         showMessage('No event found to give feedback for.', 'error');
         return;
@@ -68,10 +113,13 @@ form.addEventListener('submit', async function(e) {
     const formData = {
         eventId: currentEventId,
         userId: CURRENT_USER_ID,
-        rating: parseInt(document.getElementById('rating').value),
-        hadFun: document.getElementById('had-fun').value,
-        wouldMeetAgain: document.getElementById('meet-again').value,
-        comments: document.getElementById('comments').value
+        rating: rating,
+        wouldMeetAgain: meetAgain,
+        interactions: interactions,
+        groupComments: groupComments,
+        proposedEvent: proposedEvent,
+        eventComments: eventComments,
+        additionalComments: additionalComments
     };
 
     try {
@@ -91,13 +139,6 @@ form.addEventListener('submit', async function(e) {
     } catch (error) {
         showMessage('Error submitting feedback. Please try again.', 'error');
     }
-});
-
-function showMessage(text, type) {
-    const messageDiv = document.getElementById('feedback-message');
-    messageDiv.textContent = text;
-    messageDiv.className = `message message-${type}`;
-    messageDiv.classList.remove('hidden');
 }
 
 initUserSwitcher();
