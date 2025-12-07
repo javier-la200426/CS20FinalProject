@@ -35,7 +35,7 @@ router.post('/generate-activity', async (req, res) => {
 User locations: ${uniqueLocations.join(', ')}
 
 IMPORTANT:
-1. The activity MUST involve the hobbies listed above - these are hobbies ALL users share
+1. The activity MUST involve one of the hobbies listed above
 2. Find a CENTRAL or CONVENIENT location that works for all users based on their locations
 3. Provide a SPECIFIC venue name and exact street address, not just a generic location
 4. Choose a location that minimizes travel for everyone
