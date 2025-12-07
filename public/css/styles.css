@@ -43,7 +43,7 @@ nav ul {
 }
 
 nav ul li a {
-    font-family: Garamond;
+    font-family: inherit;
     font-size: 20px;
     font-weight: 500;
     color: #374151;     /* slate gray */
@@ -93,10 +93,9 @@ nav ul li a:hover {
 }
 
 #button-section {
-    max-width: 1100px;       /* wider */
-    padding: 60px 50px;      /* more breathing room */
-    margin: 40px auto;       /* centered with space above/below */
-    transform: scale(1.1);   /* makes everything inside bigger */
+    max-width: 900px;
+    padding: 60px 50px;
+    margin: 40px auto;
 }
 
 #button-section h1 {
@@ -160,56 +159,47 @@ nav ul li a:hover {
     justify-content: center;
 }
 
-.hero-video {
+.hero-video,
+.hero-image {
     width: 100%;
-    max-width: 800px;   /* Increase this to make the video bigger */
+    max-width: 800px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     object-fit: cover;
 }
 
-#typing-text {
-    /* display: block; */
-    min-height: 120px; /* adjust to match your h1 size */
-    min-width: 500px;
-    /* white-space: nowrap;
-    overflow: hidden; */
-}
+/* Font is set in the body rule at top of file */
 
-/* Unsplash-like system font */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-}
-
-.metrics {
+.features {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 240px;
-    padding: 20px 0;
+    gap: 60px;
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.metric-item {
+.feature-item {
+    flex: 1;
+    max-width: 320px;
     text-align: center;
-    width: 220px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
-.metric-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-    opacity: 0.85;
+.feature-item h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1f2937;
 }
 
-.metric-number {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    font-variant-numeric: tabular-nums;  /* equal-width digits */
-}
-
-.metric-label {
-    font-size: 16px;
+.feature-item p {
+    font-size: 15px;
     color: #666;
+    line-height: 1.5;
 }
 
 
@@ -437,17 +427,15 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1700000px;
-    margin-top: -80px;   
-    margin-bottom: 80px;
+    max-width: 1400px;
+    margin: 0 auto 80px;
     padding: 0 40px;
     gap: 60px;
 }
 
 .event-left {
     flex: 1;
-    max-width: 10000000px;
-    max-height: 10000000px;
+    max-width: 600px;
 }
 
 .event-left p,
@@ -955,26 +943,6 @@ h2 {
     color: #333;
 }
 
-/* Staggered fade + slide-in animation */
-.stagger > * {
-    opacity: 0;
-    transform: translateY(12px);
-    animation: fadeStagger 0.6s ease-out forwards;
-}
-
-.stagger > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger > *:nth-child(2) { animation-delay: 0.15s; }
-.stagger > *:nth-child(3) { animation-delay: 0.25s; }
-.stagger > *:nth-child(4) { animation-delay: 0.35s; }
-.stagger > *:nth-child(5) { animation-delay: 0.45s; }
-
-@keyframes fadeStagger {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
@@ -1004,11 +972,11 @@ h2 {
         text-align: center;
     }
 
-    .metrics {
-        flex-direction: column;  
-        gap: 40px;               
-        padding: 40px 0;
-        text-align: center;
+    .features {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 40px 20px;
     }
 }
 
