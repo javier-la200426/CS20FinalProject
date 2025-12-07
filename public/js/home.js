@@ -39,7 +39,10 @@ async function loadEventStatus() {
         if (!event || !event._id) {
             statusDiv.innerHTML = `
                 <p>You don't have an event for this week yet.</p>
+                <div class="btn-row">
                 <a href="events.html" class="btn">Get Your Event</a>
+                <a href="preferences.html" class="btn-secondary">Set Preferences</a>
+                </div>
             `;
             return;
         }
