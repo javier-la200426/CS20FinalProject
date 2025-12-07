@@ -118,53 +118,57 @@ nav ul li a:hover {
 .hero {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    max-width: 1500px;
-    margin: 80px auto;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 60px auto;
     padding: 0 40px;
+    gap: 60px;
 }
 
 .hero-left {
     flex: 1;
-    max-width: 750px;
+    max-width: 500px;
 }
 
 .hero-left h1 {
-    font-size: 48px;
+    font-size: 42px;
     font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 20px;
+    line-height: 1.2;
+    margin-bottom: 16px;
 }
 
 .hero-left p {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.6;
-    margin-bottom: 40px;
+    margin-bottom: 0;
     color: #555;
 }
 
 .event-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 40px;
     border-top: 1px solid #eee;
-    padding-top: 25px;
 }
 
 .event-block h2 {
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 10px;
 }
 
 .hero-right {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    max-width: 500px;
 }
 
 .hero-video,
 .hero-image {
     width: 100%;
-    max-width: 800px;
+    max-width: 450px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     object-fit: cover;
 }
 
@@ -431,15 +435,15 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1400px;
-    margin: 0 auto 80px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
     padding: 0 40px;
-    gap: 60px;
+    gap: 50px;
 }
 
 .event-left {
     flex: 1;
-    max-width: 600px;
+    max-width: 550px;
 }
 
 .event-left p,
@@ -452,15 +456,15 @@ h2 {
 .event-right {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    max-width: 500px;
 }
 
 .event-image {
-    width: 90%;
-    max-width: 900px;
-    height: 750px; 
+    width: 100%;
+    max-width: 450px;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     object-fit: cover;
 }
 
@@ -976,6 +980,54 @@ h2 {
     .btn {
         width: 100%;
         text-align: center;
+    }
+
+    .hero {
+        flex-direction: column;
+        gap: 30px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .hero-left {
+        max-width: 100%;
+    }
+
+    .hero-left h1 {
+        font-size: 28px;
+    }
+
+    .hero-right {
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .hero-image {
+        max-width: 100%;
+    }
+
+    .event-block {
+        padding: 24px 20px;
+    }
+
+    .event-hero {
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+
+    .event-left {
+        max-width: 100%;
+    }
+
+    .event-right {
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .event-image {
+        max-width: 100%;
     }
 
     .features {
