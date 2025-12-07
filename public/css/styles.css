@@ -56,13 +56,13 @@ nav ul li a:hover {
     margin-bottom: 20px;
 }
 
-.card h1 {
+.feedback-card h1 {
     color: #4a90a4;
     margin-bottom: 15px;
     text-align: center;
 }
 
-.card p {
+.feedback-card > p {
     color: #333;
     margin-bottom: 15px;
     text-align: center;
@@ -115,9 +115,7 @@ h2 {
 }
 
 .btn {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: inline-block;
     padding: 12px 24px;
     background-color: #4a90a4;
     color: white;
@@ -126,6 +124,12 @@ h2 {
     cursor: pointer;
     font-size: 16px;
     text-decoration: none;
+}
+
+.btn-centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btn:hover {
@@ -155,12 +159,16 @@ h2 {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #4a90a4;
     font-weight: bold;
+}
+
+.feedback-card .form-group label {
+    color: #4a90a4;
 }
 
 .options label {
     color: #333;
+    font-weight: normal;
 }
 
 .form-group input,

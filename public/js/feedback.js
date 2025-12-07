@@ -55,18 +55,20 @@ async function checkExistingFeedback() {
     }
 }
 
-function submitFeedback() {
-    rating = [...document.getElementsByClassName("rated")].length;
+function submitFeedback(e) {
+    e.preventDefault();
+    
+    const rating = [...document.getElementsByClassName("rated")].length;
 
-    meetAgain = ""
-    options = [...document.getElementsByName("meet")];
+    let meetAgain = "";
+    let options = [...document.getElementsByName("meet")];
     options.forEach(function(option){
         if(option.checked) {
             meetAgain = option.value;
         }
     });
 
-    interactions = ""
+    let interactions = "";
     options = [...document.getElementsByName("interactions")];
     options.forEach(function(option){
         if(option.checked) {
@@ -74,7 +76,7 @@ function submitFeedback() {
         }
     });
 
-    proposedEvent = ""
+    let proposedEvent = "";
     options = [...document.getElementsByName("proposed")];
     options.forEach(function(option){
         if(option.checked) {
@@ -82,9 +84,9 @@ function submitFeedback() {
         }
     });
 
-    groupComments = document.getElementById("group-comments").value;
-    eventComments = document.getElementById("event-comments").value;
-    additionalComments = document.getElementById("comments").value;
+    const groupComments = document.getElementById("group-comments").value;
+    const eventComments = document.getElementById("event-comments").value;
+    const additionalComments = document.getElementById("comments").value;
 
     if (meetAgain == "") {
         alert("Form is incomplete. Please select an option for the second question.");
@@ -101,7 +103,7 @@ function submitFeedback() {
     }
 
     push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments);
-    return true;
+    return false;
 }
 
 async function push(rating, meetAgain, interactions, groupComments, proposedEvent, eventComments, additionalComments) {
@@ -140,6 +142,16 @@ async function push(rating, meetAgain, interactions, groupComments, proposedEven
         showMessage('Error submitting feedback. Please try again.', 'error');
     }
 }
+
+function showMessage(text, type) {
+    const messageDiv = document.getElementById('feedback-message');
+    messageDiv.textContent = text;
+    messageDiv.className = `message message-${type}`;
+    messageDiv.classList.remove('hidden');
+}
+
+const form = document.getElementById('feedback-form');
+form.addEventListener('submit', submitFeedback);
 
 initUserSwitcher();
 loadUserName();

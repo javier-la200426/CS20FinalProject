@@ -48,12 +48,12 @@
     </nav>
 
     <div class="container">
-        <div class="card">
+        <div class="card feedback-card">
             <h1>Tell Us About Your Experience!</h1>
             <p>Help us improve future experiences for our users by completing
                 a brief survey.</p>
 
-            <form id="feedback-form" method="post" onsubmit="return submitFeedback()">
+            <form id="feedback-form">
                 <div class="form-group">
                     <label for="rating">What was your level of enjoyment of the event?</label>
                     <div class="stars">
@@ -150,7 +150,7 @@
                     <textarea id="comments" name="comments" placeholder="Tell us more about your experience..."></textarea>
                 </div>
 
-                <button type="submit" class="btn">Submit Feedback</button>
+                <button type="submit" class="btn btn-centered">Submit Feedback</button>
             </form>
 
             <div id="feedback-message" class="hidden"></div>
