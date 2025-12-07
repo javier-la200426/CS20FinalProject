@@ -10,9 +10,12 @@ const feedbackSchema = new mongoose.Schema({
         ref: 'User'
     },
     rating: Number,
-    hadFun: String,
     wouldMeetAgain: String,
-    comments: String,
+    interactions: String,
+    groupComments: String,
+    proposedEvent: String,
+    eventComments: String,
+    additionalComments: String,
     createdAt: {
         type: Date,
         default: Date.now

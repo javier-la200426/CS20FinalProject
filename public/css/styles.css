@@ -56,6 +56,54 @@ nav ul li a:hover {
     margin-bottom: 20px;
 }
 
+.feedback-card h1 {
+    color: #4a90a4;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.feedback-card > p {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.stars {
+    display: flex;
+    gap: 45px;
+    border: 1;
+    padding: 10px;
+    margin-top: 14px;
+    font-size: 30px;
+    justify-content: center;
+}
+
+.fa-star {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.fa-star.rated{
+    color: #ffde51;
+}
+
+.options {
+    margin-top: 25px;
+    display: flex;
+    gap: 45px;
+    justify-content: center;
+
+}
+
+.options .radio {
+    width: 80px;
+    text-align: center;
+}
+
+#proposed-event {
+    display: none;
+}
+
 h1 {
     color: #4a90a4;
     margin-bottom: 20px;
@@ -76,6 +124,12 @@ h2 {
     cursor: pointer;
     font-size: 16px;
     text-decoration: none;
+}
+
+.btn-centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btn:hover {
@@ -106,6 +160,15 @@ h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+}
+
+.feedback-card .form-group label {
+    color: #4a90a4;
+}
+
+.options label {
+    color: #333;
+    font-weight: normal;
 }
 
 .form-group input,
