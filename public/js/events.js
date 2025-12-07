@@ -1,10 +1,12 @@
 const API_URL = '';
+// default to demo user 1 if nothing in local storage
 let CURRENT_USER_ID = localStorage.getItem('currentUserId') || '000000000000000000000001';
 
 let currentEvent = null;
 let adCountdown = 5;
 let currentUserName = '';
 
+// dropdown to switch between different demo users
 function initUserSwitcher() {
     const switcher = document.getElementById('user-switcher');
     if (switcher) {
@@ -34,6 +36,7 @@ async function loadUserName() {
     }
 }
 
+// show fake ad for 5 seconds before revealing the event
 function showAd(callback) {
     const buttonSection = document.getElementById('button-section');
     const adSection = document.getElementById('ad-section');
@@ -59,6 +62,7 @@ function showAd(callback) {
     }, 1000);
 }
 
+// check if user already has an event, show it if they do
 async function checkExistingEvent() {
     const buttonSection = document.getElementById('button-section');
     const adSection = document.getElementById('ad-section');
@@ -75,21 +79,23 @@ async function checkExistingEvent() {
             currentEvent = event;
             displayEvent(event);
         } else {
-            // Show the button section, hide ad and event
+            // no event yet, show the "get event" button
             buttonSection.classList.remove('hidden');
             adSection.classList.add('hidden');
             eventSection.classList.add('hidden');
         }
     } catch (error) {
-        // Show the button section, hide ad and event
+        // error means no event, show button
         buttonSection.classList.remove('hidden');
         adSection.classList.add('hidden');
         eventSection.classList.add('hidden');
     }
 }
 
+// run matchmaking, then use AI to suggest activity details
 async function generateNewEvent() {
     try {
+        // first, run matchmaking algorithm to find group
         const response = await fetch(`${API_URL}/api/events/generate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -97,6 +103,7 @@ async function generateNewEvent() {
         });
         const event = await response.json();
 
+        // then ask AI to suggest specific activity
         const aiResponse = await fetch(`${API_URL}/api/ai/generate-activity`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -104,6 +111,7 @@ async function generateNewEvent() {
         });
         const updatedEvent = await aiResponse.json();
 
+        // fetch the final event with stats
         const eventResponse = await fetch(`${API_URL}/api/events/user/${CURRENT_USER_ID}`);
         const finalEvent = await eventResponse.json();
 
@@ -114,17 +122,19 @@ async function generateNewEvent() {
     }
 }
 
+// populate the event card with all the details
 function displayEvent(event) {
     document.getElementById('activity-name').textContent = event.activityName;
     document.getElementById('activity-description').textContent = event.activityDescription;
     document.getElementById('event-location').textContent = event.location;
     document.getElementById('event-time').textContent = event.scheduledTime;
-    
+
     const statusSpan = document.getElementById('event-status');
     const userStatus = event.userStatus || 'pending';
     statusSpan.textContent = userStatus.charAt(0).toUpperCase() + userStatus.slice(1);
     statusSpan.className = `status-${userStatus}`;
 
+    // show group stats if available
     if (event.stats) {
         document.getElementById('stats-total').textContent = event.stats.total;
         document.getElementById('stats-accepted').textContent = event.stats.accepted;
@@ -133,6 +143,7 @@ function displayEvent(event) {
         document.getElementById('event-stats').classList.remove('hidden');
     }
 
+    // hide accept/decline buttons if user already responded
     const actionButtons = document.getElementById('action-buttons');
     if (userStatus !== 'pending') {
         actionButtons.classList.add('hidden');

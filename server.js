@@ -6,14 +6,19 @@ require('dotenv').config();
 
 const app = express();
 
+// let frontend talk to backend from anywhere
 app.use(cors());
+// parse JSON request bodies
 app.use(express.json());
+// serve static files from public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// connect to mongodb - using env variable from the einv flile
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log('MongoDB connection error:', err));
 
+// set up all our api routes
 const userRoutes = require('./routes/users');
 const eventRoutes = require('./routes/events');
 const aiRoutes = require('./routes/ai');
