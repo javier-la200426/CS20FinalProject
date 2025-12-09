@@ -409,6 +409,11 @@ p, label {
 
 .event-details p {
     margin-bottom: 10px;
+    color: #666;
+}
+
+.event-details p span {
+    color: #666;
 }
 
 .event-details strong {
@@ -508,6 +513,10 @@ p, label {
 .event-left h3 {
     background: none !important;
     box-shadow: none !important;
+}
+
+.event-left h1 {
+    color: #FFF;
 }
 
 .event-right {
