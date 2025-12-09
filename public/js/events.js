@@ -143,6 +143,33 @@ function displayEvent(event) {
         document.getElementById('event-stats').classList.remove('hidden');
     }
 
+    // show member emails if available
+    if (event.memberDetails && event.memberDetails.length > 0) {
+        const membersList = document.getElementById('members-list');
+        membersList.innerHTML = '';
+        
+        event.memberDetails.forEach(member => {
+            const memberDiv = document.createElement('div');
+            memberDiv.className = 'member-item';
+            
+            const statusClass = `member-status-${member.status}`;
+            const statusLabel = member.status.charAt(0).toUpperCase() + member.status.slice(1);
+            const youLabel = member.isCurrentUser ? ' (You)' : '';
+            
+            memberDiv.innerHTML = `
+                <div class="member-info">
+                    <strong>${member.name}${youLabel}</strong>
+                    <span class="member-email">${member.email}</span>
+                </div>
+                <span class="member-status ${statusClass}">${statusLabel}</span>
+            `;
+            
+            membersList.appendChild(memberDiv);
+        });
+        
+        document.getElementById('event-members').classList.remove('hidden');
+    }
+
     // hide accept/decline buttons if user already responded
     const actionButtons = document.getElementById('action-buttons');
     if (userStatus !== 'pending') {

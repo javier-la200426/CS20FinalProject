@@ -51,12 +51,21 @@ router.get('/user/:userId', async (req, res) => {
     try {
         const event = await Event.findOne({
             'groupMembers.userId': req.params.userId
-        }).sort({ createdAt: -1 });
+        }).populate('groupMembers.userId', 'name email').sort({ createdAt: -1 });
 
         if (event) {
             const userMember = event.groupMembers.find(
-                m => m.userId.toString() === req.params.userId
+                m => m.userId._id.toString() === req.params.userId
             );
+            
+            // get member details with emails
+            const memberDetails = event.groupMembers.map(m => ({
+                name: m.userId.name,
+                email: m.userId.email,
+                status: m.status,
+                isCurrentUser: m.userId._id.toString() === req.params.userId
+            }));
+            
             // add user's specific status and overall group stats
             const response = {
                 ...event.toObject(),
@@ -66,7 +75,8 @@ router.get('/user/:userId', async (req, res) => {
                     accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
                     declined: event.groupMembers.filter(m => m.status === 'declined').length,
                     pending: event.groupMembers.filter(m => m.status === 'pending').length
-                }
+                },
+                memberDetails: memberDetails
             };
             res.json(response);
         } else {
@@ -153,15 +163,23 @@ router.post('/generate', async (req, res) => {
 // user accepts their event invitation
 router.put('/:id/accept/:userId', async (req, res) => {
     try {
-        const event = await Event.findById(req.params.id);
+        const event = await Event.findById(req.params.id).populate('groupMembers.userId', 'name email');
         const memberIndex = event.groupMembers.findIndex(
-            m => m.userId.toString() === req.params.userId
+            m => m.userId._id.toString() === req.params.userId
         );
 
         if (memberIndex !== -1) {
             event.groupMembers[memberIndex].status = 'accepted';
             await event.save();
         }
+
+        // get member details with emails
+        const memberDetails = event.groupMembers.map(m => ({
+            name: m.userId.name,
+            email: m.userId.email,
+            status: m.status,
+            isCurrentUser: m.userId._id.toString() === req.params.userId
+        }));
 
         const response = {
             ...event.toObject(),
@@ -171,7 +189,8 @@ router.put('/:id/accept/:userId', async (req, res) => {
                 accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
                 declined: event.groupMembers.filter(m => m.status === 'declined').length,
                 pending: event.groupMembers.filter(m => m.status === 'pending').length
-            }
+            },
+            memberDetails: memberDetails
         };
         res.json(response);
     } catch (error) {
@@ -182,15 +201,23 @@ router.put('/:id/accept/:userId', async (req, res) => {
 // user declines their event invitation
 router.put('/:id/decline/:userId', async (req, res) => {
     try {
-        const event = await Event.findById(req.params.id);
+        const event = await Event.findById(req.params.id).populate('groupMembers.userId', 'name email');
         const memberIndex = event.groupMembers.findIndex(
-            m => m.userId.toString() === req.params.userId
+            m => m.userId._id.toString() === req.params.userId
         );
 
         if (memberIndex !== -1) {
             event.groupMembers[memberIndex].status = 'declined';
             await event.save();
         }
+
+        // get member details with emails
+        const memberDetails = event.groupMembers.map(m => ({
+            name: m.userId.name,
+            email: m.userId.email,
+            status: m.status,
+            isCurrentUser: m.userId._id.toString() === req.params.userId
+        }));
 
         const response = {
             ...event.toObject(),
@@ -200,7 +227,8 @@ router.put('/:id/decline/:userId', async (req, res) => {
                 accepted: event.groupMembers.filter(m => m.status === 'accepted').length,
                 declined: event.groupMembers.filter(m => m.status === 'declined').length,
                 pending: event.groupMembers.filter(m => m.status === 'pending').length
-            }
+            },
+            memberDetails: memberDetails
         };
         res.json(response);
     } catch (error) {
