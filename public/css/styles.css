@@ -598,6 +598,68 @@ p, label {
     color: #636e72;
 }
 
+.event-members {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.event-members h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.member-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.member-info strong {
+    color: #2d3436;
+    font-size: 15px;
+}
+
+.member-email {
+    color: #666;
+    font-size: 13px;
+}
+
+.member-status {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.member-status-accepted {
+    background: #d4edda;
+    color: #00b894;
+}
+
+.member-status-declined {
+    background: #f8d7da;
+    color: #b2bec3;
+}
+
+.member-status-pending {
+    background: #e2e3e5;
+    color: #636e72;
+}
+
 .availability-grid {
     display: flex;
     flex-direction: column;
