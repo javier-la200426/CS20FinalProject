@@ -161,9 +161,6 @@ nav ul li a:hover {
     color: #FFF;
 }
 
-a.btn {
-    margin-top: 15px;
-}
 
 .hero-right {
     flex: 1;
@@ -576,7 +573,8 @@ p, label {
 .stats-grid {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 .stat-item {
@@ -1137,6 +1135,26 @@ p, label {
 
     .event-image {
         max-width: 100%;
+    }
+
+    .stats-grid {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .stat-item {
+        padding: 10px 15px;
+        min-width: 70px;
+        flex: 1 1 40%;
+    }
+
+    .stat-number {
+        font-size: 22px;
+    }
+
+    .stat-label {
+        font-size: 12px;
     }
 
     .features {
