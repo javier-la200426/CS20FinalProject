@@ -85,6 +85,7 @@ nav ul li a:hover {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
+    width: 100%;
 }
 
 .card {
@@ -893,8 +894,9 @@ p, label {
     font-size: 0.9em;
 }
 
-.admin-container {
-    max-width: 1000px;
+.container.admin-container {
+    max-width: 1200px;
+    width: 100%;
 }
 
 .admin-tabs {
