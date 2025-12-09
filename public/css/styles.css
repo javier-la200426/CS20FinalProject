@@ -9,6 +9,9 @@ body {
     background-color: #015551;
     color: #FFF;
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
@@ -1164,7 +1167,7 @@ footer {
     border-top: 1px solid #e5e7eb;
     padding: 24px 36px;
     text-align: center;
-    margin-top: 60px;
+    margin-top: auto;
 }
 
 footer p {
