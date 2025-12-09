@@ -1070,12 +1070,16 @@ p, label {
     }
 
     .container {
-        margin: 20px;
-        padding: 10px;
+        margin: 20px auto;
+        padding: 0 15px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .card {
         padding: 20px;
+        box-sizing: border-box;
+        width: 100%;
     }
 
     .button-group {
@@ -1170,6 +1174,23 @@ p, label {
     .form-group p {
         font-size: 12px !important;
         line-height: 1.4;
+    }
+
+    .options {
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 0 5px;
+    }
+
+    .options .radio {
+        width: auto;
+        min-width: 60px;
+        flex: 1 1 auto;
+    }
+
+    .options .radio label {
+        font-size: 13px;
+        white-space: nowrap;
     }
 }
 
