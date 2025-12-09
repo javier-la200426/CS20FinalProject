@@ -108,7 +108,7 @@ router.post('/generate', async (req, res) => {
         // hardcoded demo users that we want to prioritize in matches
         const DEMO_USER_IDS = ['000000000000000000000001', '000000000000000000000002'];
 
-        // New algorithm: Build group where ALL members share 2+ hobbies
+        // BBuild group where ALL members share 2+ hobbies
         // Prioritize demo users, then find matches that maintain universal overlap
         const demoUsers = allUsers.filter(user => DEMO_USER_IDS.includes(user._id.toString()));
         const regularUsers = allUsers.filter(user => !DEMO_USER_IDS.includes(user._id.toString()));
